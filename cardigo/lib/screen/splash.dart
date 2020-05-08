@@ -21,7 +21,7 @@ class SplashScreenState extends State<AnimatedSplashScreen>
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed(HOME_SCREEN);
+    Navigator.of(context).pushReplacementNamed(LOGIN_SCREEN);
   }
 
   @override
@@ -54,7 +54,7 @@ class SplashScreenState extends State<AnimatedSplashScreen>
               Padding(
                   padding: EdgeInsets.only(bottom: 30.0),
                   child: new Image.asset(
-                    'assets/Deloitte.png',
+                    'assets/logo_del.png',
                     height: 25.0,
                     fit: BoxFit.scaleDown,
                   ))
@@ -64,7 +64,7 @@ class SplashScreenState extends State<AnimatedSplashScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Image.asset(
-                'assets/Deloitte.png',
+                'assets/logo_del.png',
                 width: animation.value * 250,
                 height: animation.value * 250,
               ),

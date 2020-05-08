@@ -1,5 +1,4 @@
-import 'package:cardigo/screen/homescreen.dart';
-import 'package:cardigo/utils/bottom_nav.dart';
+import 'package:cardigo/screen/login.dart';
 import 'package:flutter/material.dart';
 import 'package:cardigo/screen/splash.dart';
 import 'package:cardigo/utils/constant.dart';
@@ -18,19 +17,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         SPLASH_SCREEN: (BuildContext context) => AnimatedSplashScreen(),
-        HOME_SCREEN: (BuildContext context) => HomeApp(),
+        LOGIN_SCREEN: (BuildContext context) => loginPage(),
       },
-    );
-  }
-}
-
-class HomeApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: HomeScreen(),
-      bottomNavigationBar: Bottom(),
     );
   }
 }

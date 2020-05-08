@@ -1,2 +1,3 @@
 String SPLASH_SCREEN = '/AnimatedSplashScreen',
-    HOME_SCREEN='/MyApp';
+    HOME_SCREEN='/HomeScreen',
+    LOGIN_SCREEN='/loginPage';

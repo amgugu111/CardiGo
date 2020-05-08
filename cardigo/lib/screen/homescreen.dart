@@ -1,3 +1,5 @@
+import 'package:cardigo/utils/bottom_nav.dart';
+import 'package:cardigo/utils/globalappbar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,6 +10,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    var appBar = new GlobalAppBar();
+    return Scaffold(
+      appBar: appBar,
+      bottomNavigationBar: Bottom(),
+    );
   }
 }

@@ -13,29 +13,45 @@ class _BottomState extends State<Bottom> {
       items: [
         BottomNavigationBarItem(
           title: Text(
-            'Home',
-            style: TextStyle(color: Colors.black),
+            'Dashboard',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.dashboard),
         ),
         BottomNavigationBarItem(
           title: Text(
             'Survey Center',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           icon: Icon(Icons.assignment),
         ),
         BottomNavigationBarItem(
           title: Text(
             'Configure',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          icon: Icon(Icons.help),
+          icon: Icon(Icons.settings_bluetooth),
         ),
         BottomNavigationBarItem(
           title: Text(
             'Profile',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: Colors.grey,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           icon: Icon(Icons.account_circle),
         )
