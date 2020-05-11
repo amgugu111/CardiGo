@@ -10,13 +10,6 @@ class GlobalAppBar extends StatefulWidget implements PreferredSizeWidget  {
 }
 
 class _GlobalAppBarState extends State<GlobalAppBar> {
-  ImageIcon getAudioIcon(musicPlaying) {
-    if (musicPlaying == false) {
-      return ImageIcon(AssetImage('assets/speaker_icon.png'));
-    }
-    return ImageIcon(AssetImage('assets/mute_icon.png'));
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +23,15 @@ class _GlobalAppBarState extends State<GlobalAppBar> {
       ),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
-      title: Text('CardiGo',
+      title: Image.asset('assets/cardigo_logo.png',height: 30.0,
+        fit: BoxFit.scaleDown,),
+      /*Text('CardiGo',
           style: TextStyle(
               fontFamily: 'Montserrat',
               fontSize: 25.0,
               fontWeight: FontWeight.bold,
               color: Colors.black)
-      ),
+      ),*/
       centerTitle: true,
       actions: <Widget>[
         IconButton(

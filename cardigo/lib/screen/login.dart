@@ -1,11 +1,14 @@
 import 'package:cardigo/screen/homescreen.dart';
+import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class loginPage extends StatefulWidget {
   @override
   _loginPageState createState() => _loginPageState();
 }
 
+// ignore: camel_case_types
 class _loginPageState extends State<loginPage> {
   @override
   Widget build(BuildContext context) {
@@ -98,7 +101,7 @@ class _loginPageState extends State<loginPage> {
                           onTap: () {
                             Navigator.push(context,
                             MaterialPageRoute(builder: (context)
-                            => HomeScreen()));
+                            => Bottom()));
                           },
                           child: Center(
                             child: Text(

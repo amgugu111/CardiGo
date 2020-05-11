@@ -52,10 +52,10 @@ class SplashScreenState extends State<AnimatedSplashScreen>
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Padding(
-                  padding: EdgeInsets.only(bottom: 30.0),
+                  padding: EdgeInsets.only(bottom: 25.0),
                   child: new Image.asset(
                     'assets/logo_del.png',
-                    height: 25.0,
+                    height: 20.0,
                     fit: BoxFit.scaleDown,
                   ))
             ],
@@ -64,7 +64,7 @@ class SplashScreenState extends State<AnimatedSplashScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Image.asset(
-                'assets/logo_del.png',
+                'assets/cardigo_logo.png',
                 width: animation.value * 250,
                 height: animation.value * 250,
               ),
