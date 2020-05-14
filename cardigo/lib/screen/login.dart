@@ -2,33 +2,34 @@ import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:cardigo/utils/loader.dart';
 
 // ignore: camel_case_types
 class loginPage extends StatefulWidget {
+
   @override
   _loginPageState createState() => _loginPageState();
 }
 
+// ignore: missing_return
 Future<UserModel> currentUser(String eId, String password) async{
   final String dbUrl = "https://536b9159-b453-404d-b7d5-a9513293dc75-bluemix.cloudant.com/employee-details-cardigo/"+eId;
   print(dbUrl);
-
   final response = await http.get(dbUrl);
-
+  var code = response.statusCode;
+  print(code);
   if(response.statusCode == 200){
     final String responseString = response.body;
     return userModelFromJson(responseString);
   }
   else{
-    return null;
+    String wrongMsg = "Invalid Employee ID";
+    showToast(wrongMsg);
   }
 }
 
-void showToast() {
-  Fluttertoast.showToast(msg: "Wrong Employee ID/Password",
+void showToast(String msg) {
+  Fluttertoast.showToast(msg: msg,
       toastLength: Toast.LENGTH_LONG,
       backgroundColor: Colors.black,
       textColor: Colors.white);
@@ -41,12 +42,45 @@ class _loginPageState extends State<loginPage> {
   final TextEditingController eIdController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
   UserModel _user;
+  bool isLoading = false;
+
+  isLoggedIn() async{
+    final String eId = eIdController.text;
+    final String password = passwordController.text;
+    final UserModel user = await currentUser(eId, password);
+    print(isLoading);
+    setState(() {
+      _user = user;
+        if(_user.employeeId == password.trim()) {
+          setState(() {
+            isLoading = false;
+            print(isLoading);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context)
+                => Bottom(isLoading)));
+          });
+        }
+        else {
+          setState(() {
+            isLoading = false;
+          });
+          String wrongMsg = "Wrong Password";
+          showToast(wrongMsg);
+        }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: Column(
+        body: isLoading ?
+        Container(
+/*          width: double.infinity,
+          height: double.infinity,*/
+          child: CircularProgressIndicator(),
+        )
+        : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -132,39 +166,20 @@ class _loginPageState extends State<loginPage> {
                         color: Color(0xFF86BC24),
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: ()  async{
-                            final String eId = eIdController.text;
-                            final String password = passwordController.text;
-                            final UserModel user = await currentUser(eId, password);
-                            bool _loggedIn = false;
-                            print(_loggedIn);
+                          onTap: ()  {
                             setState(() {
-                              _user = user;
-                              if(_user.employeeId == password.trim()) {
-                                setState(() {
-                                  _loggedIn = true;
-                                  print(_loggedIn);
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context)
-                                      => Bottom()));
-                                });
-                              }
-                              else {
-                                setState(() {
-                                  _loggedIn = false;
-                                  print(_loggedIn);
-                                });
-                                showToast();
-                              }
+                              isLoading = true;
                             });
+                            isLoggedIn();
                           },
                           child: Center(
                             child: Text(
                               'LOGIN',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat'),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat'
+                              ),
                             ),
                           ),
                         ),

@@ -8,7 +8,12 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
 
-  final UserModel user = new UserModel();
+  UserModel currUser = new UserModel();
+/*
+  String first = currUser.firstName;
+  String last = currUser.lastName;
+  String imageUrl = currUser.avatar;
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +22,8 @@ class _UserProfileState extends State<UserProfile> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.network(user.avatar),
-          Text(user.firstName+" "+user.lastName),
+          Image.network(currUser.avatar),
+          Text(currUser.firstName+" "+currUser.lastName),
         ],
       ),
     );
