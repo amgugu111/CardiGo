@@ -15,7 +15,7 @@ class _ConfigureBluetoothState extends State<ConfigureBluetooth> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Colors.lightBlue,
+      color: Color(0xFF86BC24),
       home: StreamBuilder<BluetoothState>(
           stream: FlutterBlue.instance.state,
           initialData: BluetoothState.unknown,
@@ -38,7 +38,7 @@ class BluetoothOffScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue,
+      backgroundColor: Color(0xFF86BC24),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

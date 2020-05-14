@@ -9,15 +9,15 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
-  int id;
+  String id;
   String employeeId;
   String email;
   String firstName;
   String lastName;
   String avatar;
-  String pulseData;
+  int pulseData;
   String hofData;
-  String blueStatus;
+  bool blueStatus;
   String feedbackReport;
 
   UserModel({
@@ -34,7 +34,7 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json["id"],
+    id: json["_id"],
     employeeId: json["employee_id"],
     email: json["email"],
     firstName: json["first_name"],
@@ -47,7 +47,7 @@ class UserModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
+    "_id": id,
     "employee_id": employeeId,
     "email": email,
     "first_name": firstName,

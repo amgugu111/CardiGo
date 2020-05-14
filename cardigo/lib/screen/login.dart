@@ -1,6 +1,10 @@
-import 'package:cardigo/screen/homescreen.dart';
 import 'package:cardigo/utils/bottom_nav.dart';
+import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:cardigo/utils/loader.dart';
 
 // ignore: camel_case_types
 class loginPage extends StatefulWidget {
@@ -8,8 +12,36 @@ class loginPage extends StatefulWidget {
   _loginPageState createState() => _loginPageState();
 }
 
+Future<UserModel> currentUser(String eId, String password) async{
+  final String dbUrl = "https://536b9159-b453-404d-b7d5-a9513293dc75-bluemix.cloudant.com/employee-details-cardigo/"+eId;
+  print(dbUrl);
+
+  final response = await http.get(dbUrl);
+
+  if(response.statusCode == 200){
+    final String responseString = response.body;
+    return userModelFromJson(responseString);
+  }
+  else{
+    return null;
+  }
+}
+
+void showToast() {
+  Fluttertoast.showToast(msg: "Wrong Employee ID/Password",
+      toastLength: Toast.LENGTH_LONG,
+      backgroundColor: Colors.black,
+      textColor: Colors.white);
+  print("Wrong Creds");
+}
+
 // ignore: camel_case_types
 class _loginPageState extends State<loginPage> {
+
+  final TextEditingController eIdController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
+  UserModel _user;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +85,7 @@ class _loginPageState extends State<loginPage> {
                 child: Column(
                   children: <Widget>[
                     TextField(
+                      controller: eIdController,
                       decoration: InputDecoration(
                           labelText: 'Employee ID',
                           labelStyle: TextStyle(
@@ -64,6 +97,7 @@ class _loginPageState extends State<loginPage> {
                     ),
                     SizedBox(height: 20.0),
                     TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
@@ -94,14 +128,35 @@ class _loginPageState extends State<loginPage> {
                       height: 50.0,
                       child: Material(
                         borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.greenAccent,
+                        shadowColor: Colors.lightGreenAccent,
                         color: Color(0xFF86BC24),
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(context,
-                            MaterialPageRoute(builder: (context)
-                            => Bottom()));
+                          onTap: ()  async{
+                            final String eId = eIdController.text;
+                            final String password = passwordController.text;
+                            final UserModel user = await currentUser(eId, password);
+                            bool _loggedIn = false;
+                            print(_loggedIn);
+                            setState(() {
+                              _user = user;
+                              if(_user.employeeId == password.trim()) {
+                                setState(() {
+                                  _loggedIn = true;
+                                  print(_loggedIn);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context)
+                                      => Bottom()));
+                                });
+                              }
+                              else {
+                                setState(() {
+                                  _loggedIn = false;
+                                  print(_loggedIn);
+                                });
+                                showToast();
+                              }
+                            });
                           },
                           child: Center(
                             child: Text(
@@ -129,7 +184,7 @@ class _loginPageState extends State<loginPage> {
                 SizedBox(width: 5.0),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/signup');
+//                    Navigator.of(context).pushNamed('/signup');
                   },
                   child: Text(
                     'Contact Admin',

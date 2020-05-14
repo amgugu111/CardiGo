@@ -2,9 +2,11 @@ import 'package:cardigo/screen/configure.dart';
 import 'package:cardigo/screen/homescreen.dart';
 import 'package:cardigo/screen/profile.dart';
 import 'package:cardigo/screen/takesurvey.dart';
+import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/material.dart';
 
 class Bottom extends StatefulWidget {
+
   @override
   _BottomState createState() => _BottomState();
 }
