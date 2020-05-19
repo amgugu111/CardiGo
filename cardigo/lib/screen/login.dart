@@ -1,4 +1,5 @@
 import 'package:cardigo/utils/bottom_nav.dart';
+import 'package:cardigo/utils/statecontainer.dart';
 import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -48,37 +49,58 @@ class _loginPageState extends State<loginPage> {
     final String eId = eIdController.text;
     final String password = passwordController.text;
     final UserModel user = await currentUser(eId, password);
+    final userInherited = StateContainer.of(context);
     print(isLoading);
     setState(() {
       _user = user;
-        if(_user.employeeId == password.trim()) {
-          setState(() {
-            isLoading = false;
-            print(isLoading);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context)
-                => Bottom(isLoading)));
-          });
-        }
-        else {
-          setState(() {
-            isLoading = false;
-          });
-          String wrongMsg = "Wrong Password";
-          showToast(wrongMsg);
-        }
+      if(_user.employeeId == password.trim()) {
+        setState(() {
+          userInherited.updateUserInfo(id:_user.id, employeeId:_user.employeeId,
+              email: _user.email, firstName:_user.firstName, lastName: _user.lastName,
+              avatar: _user.avatar, pulseData: _user.pulseData, hofData:_user.hofData,
+              blueStatus: _user.blueStatus, feedbackReport:_user.feedbackReport);
+          isLoading = false;
+          print(isLoading);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context)
+              => Bottom()));
+        });
+      }
+      else {
+        setState(() {
+          isLoading = false;
+        });
+        String wrongMsg = "Wrong Password";
+        showToast(wrongMsg);
+      }
     });
   }
 
+  submitDetails() {
+    final userInherited = StateContainer.of(context);
+
+  }
+
+  String validatePassword(String value) {
+    if (!(value.length > 5) && value.isNotEmpty) {
+      return "ID should contains more then 5 character";
+    }
+    else if(value.isEmpty){
+      return "ID can't be empty";
+    }
+    return null;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         body: isLoading ?
-        Container(
-/*          width: double.infinity,
-          height: double.infinity,*/
-          child: CircularProgressIndicator(),
+        Center(child:
+          Container(
+  /*          width: double.infinity,
+            height: double.infinity,*/
+            child: CircularProgressIndicator(),
+          ),
         )
         : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,6 +143,7 @@ class _loginPageState extends State<loginPage> {
                     TextField(
                       controller: eIdController,
                       decoration: InputDecoration(
+                          errorText: validatePassword(eIdController.text),
                           labelText: 'Employee ID',
                           labelStyle: TextStyle(
                               fontFamily: 'Montserrat',

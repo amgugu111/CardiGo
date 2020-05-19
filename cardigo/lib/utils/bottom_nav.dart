@@ -2,21 +2,27 @@ import 'package:cardigo/screen/configure.dart';
 import 'package:cardigo/screen/homescreen.dart';
 import 'package:cardigo/screen/profile.dart';
 import 'package:cardigo/screen/takesurvey.dart';
+import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/material.dart';
 
 class Bottom extends StatefulWidget {
 
-  final bool isLoading;
-  Bottom(this.isLoading);
-
   @override
   _BottomState createState() => _BottomState();
+
 }
 
 class _BottomState extends State<Bottom> {
 
-  int _currentIndex = 2;
+  final UserModel user;
+  _BottomState({this.user});
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
+  int _currentIndex = 2;
   final List<Widget> _children =
       [
         HomeScreen(),
