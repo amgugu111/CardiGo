@@ -89,9 +89,9 @@ class _BottomState extends State<Bottom> {
             _currentIndex = index;
           });
         },
-        selectedItemColor: Colors.black,
+        selectedItemColor: Color(0xFF86BC24),
         unselectedItemColor: Colors.grey,
-        selectedFontSize: 14,
+        selectedFontSize: 16,
       ),
     );
   }

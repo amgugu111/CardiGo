@@ -1,10 +1,10 @@
+import 'package:cardigo/utils/globalappbar.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:cardigo/widgets//widgets.dart';
 import 'package:cardigo/screen/homescreen.dart';
-
 
 class ConfigureBluetooth extends StatefulWidget {
   @override
@@ -15,17 +15,19 @@ class _ConfigureBluetoothState extends State<ConfigureBluetooth> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       color: Color(0xFF86BC24),
       home: StreamBuilder<BluetoothState>(
-          stream: FlutterBlue.instance.state,
-          initialData: BluetoothState.unknown,
-          builder: (c, snapshot) {
-            final state = snapshot.data;
-            if (state == BluetoothState.on) {
-              return FindDevicesScreen();
-            }
-            return BluetoothOffScreen(state: state);
-          }),
+        stream: FlutterBlue.instance.state,
+        initialData: BluetoothState.unknown,
+        builder: (c, snapshot) {
+          final state = snapshot.data;
+          if (state == BluetoothState.on) {
+            return FindDevicesScreen();
+          }
+          return BluetoothOffScreen(state: state);
+        }
+      ),
     );
   }
 }
@@ -37,8 +39,10 @@ class BluetoothOffScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = GlobalAppBar();
     return Scaffold(
-      backgroundColor: Color(0xFF86BC24),
+      appBar: appBar,
+//      backgroundColor: Color(0xFF86BC24),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -46,15 +50,16 @@ class BluetoothOffScreen extends StatelessWidget {
             Icon(
               Icons.bluetooth_disabled,
               size: 200.0,
-              color: Colors.white54,
+              color: Color(0xFF86BC24),
             ),
+            SizedBox(height: 10),
             Text(
               'Bluetooth Adapter is ${state != null ? state.toString().substring(15) : 'not available'}.',
               style: Theme.of(context)
                   .primaryTextTheme
                   // ignore: deprecated_member_use
                   .subhead
-                  .copyWith(color: Colors.white),
+                  .copyWith(color: Colors.black, fontSize: 20,fontFamily: 'Montserrat',fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -66,10 +71,9 @@ class BluetoothOffScreen extends StatelessWidget {
 class FindDevicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final appBar = GlobalAppBar();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Find Devices'),
-      ),
+      appBar: appBar,
       body: RefreshIndicator(
         onRefresh: () =>
             FlutterBlue.instance.startScan(timeout: Duration(seconds: 4)),
@@ -141,8 +145,10 @@ class FindDevicesScreen extends StatelessWidget {
           } else {
             return FloatingActionButton(
                 child: Icon(Icons.search),
+                backgroundColor: Color(0xFF86BC24),
                 onPressed: () => FlutterBlue.instance
-                    .startScan(timeout: Duration(seconds: 4)));
+                    .startScan(timeout: Duration(seconds: 4)),
+            );
           }
         },
       ),
@@ -227,14 +233,15 @@ class DeviceScreen extends StatelessWidget {
                   break;
               }
               return FlatButton(
-                  onPressed: onPressed,
-                  child: Text(
-                    text,
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .button
-                        .copyWith(color: Colors.white),
-                  ));
+                onPressed: onPressed,
+                child: Text(
+                  text,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .button
+                      .copyWith(color: Colors.white),
+                )
+              );
             },
           )
         ],
@@ -304,3 +311,75 @@ class DeviceScreen extends StatelessWidget {
     );
   }
 }
+
+/*
+if (snapshot.data) {
+return Container(
+height: 50.0,
+width: 250,
+child: Material(
+borderRadius: BorderRadius.circular(40.0),
+shadowColor: Colors.red,
+color: Colors.redAccent,
+elevation: 7.0,
+child: GestureDetector(
+onTap: ()  => FlutterBlue.instance.stopScan(),
+child: Center(
+child: Text(
+'Stop Scan',
+style: TextStyle(
+color: Colors.white,
+fontWeight: FontWeight.bold,
+fontFamily: 'Montserrat',
+fontSize: 16,
+),
+),
+),
+),
+),
+);
+} else {
+return Center(
+child:Column(
+crossAxisAlignment: CrossAxisAlignment.center,
+mainAxisAlignment: MainAxisAlignment.center,
+children: <Widget>[
+SizedBox(
+height: 30,
+),
+Icon(
+Icons.bluetooth_searching,
+size: 100.0,
+color: Colors.black38,
+),
+SizedBox(
+height: 30,
+),
+Container(
+height: 50.0,
+width: 250,
+child: Material(
+borderRadius: BorderRadius.circular(40.0),
+shadowColor: Colors.lightGreenAccent,
+color: Color(0xFF86BC24),
+elevation: 7.0,
+child: GestureDetector(
+onTap: ()  => FlutterBlue.instance
+    .startScan(timeout: Duration(seconds: 4)),
+child: Center(
+child: Text(
+'Scan for devices',
+style: TextStyle(
+color: Colors.white,
+fontWeight: FontWeight.bold,
+fontFamily: 'Montserrat',
+fontSize: 16,
+),
+),
+),
+),
+),
+)
+]
+)
+);*/

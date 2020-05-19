@@ -14,13 +14,13 @@ class _GlobalAppBarState extends State<GlobalAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
+/*      leading: IconButton(
         onPressed: () {
           Navigator.of(context).pop();
         },
         icon: Icon(Icons.arrow_back_ios),
         color: Colors.black,
-      ),
+      ),*/
       backgroundColor: Colors.transparent,
       elevation: 0.0,
       title: Image.asset('assets/cardigo_logo.png',height: 30.0,

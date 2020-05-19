@@ -25,6 +25,7 @@ dependencies:
   shared_preferences: ^0.5.7+2
   fluttertoast: ^4.0.0
   progress_dialog: ^1.2.2
+  giffy_dialog: ^1.7.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -49,6 +50,8 @@ flutter:
   assets:
     - assets/logo_del.png
     - assets/cardigo_logo.png
+    - assets/cg_logo.png
+    - assets/dialog.gif
 
   # To add assets to your application, add an assets section, like this:
   # assets:
