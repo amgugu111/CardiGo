@@ -16,13 +16,8 @@ class _BottomState extends State<Bottom> {
 
   final UserModel user;
   _BottomState({this.user});
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
-  int _currentIndex = 2;
+  int _currentIndex = 0;
   final List<Widget> _children =
       [
         HomeScreen(),

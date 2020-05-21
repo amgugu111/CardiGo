@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert' show utf8;
+import 'package:cardigo/screen/alerts.dart';
 import 'package:cardigo/screen/configure.dart';
 import 'package:cardigo/screen/takesurvey.dart';
 import 'package:cardigo/utils/globalappbar.dart';
 import 'package:cardigo/utils/statecontainer.dart';
 import 'package:cardigo/utils/user_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
@@ -153,23 +155,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: <Widget>
                             [
                               Text(user != null ? 'Hi ${user.firstName}, ':'Hi User',
-                                  style: TextStyle(color: Color(0xff013220),fontWeight: FontWeight.w700, fontSize: 34.0)),
-                              Text(user != null ?'${user.email}':'your email',
-                                  style: TextStyle(color: Colors.black))
+                                  style: TextStyle(color: Color(0xff013220),
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 34.0,fontFamily: "Montserrat")),
+                              Text(user != null ?'${user.designation}':'your designation',
+                                  style: TextStyle(color: Colors.black45,
+                                      fontSize: 20,fontFamily: "Montserrat"))
                             ],
                           ),
                           Material(
                             shadowColor: Colors.lightGreenAccent,
-                            borderRadius: BorderRadius.circular(24.0),
                             child: Center(
                               child: user != null ?
                               CircleAvatar(
-                                radius: 30.0,
+                                radius: 40.0,
                                 backgroundImage:
                                 NetworkImage("${user.avatar}"),
                                 backgroundColor: Colors.transparent,
                               )
-                                  : Image.network("https://gravatar.com/avatar/7dfdb904210b9f127d2fa37d956e4a6d?s=400&d=robohash&r=x"),
+                                  : Image.asset("assets/avatar.png"),
                             )
                           )
                         ]
@@ -179,54 +183,88 @@ class _HomeScreenState extends State<HomeScreen> {
                   _buildTile(
                     Padding(
                       padding: const EdgeInsets.all(24.0),
-                      child: Column
-                        (
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>
-                          [
-                            Material
-                              (
-                                color: Colors.teal,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Material(
+                                color: Colors.blueAccent,
                                 shape: CircleBorder(),
                                 child: Padding
                                   (
                                   padding: const EdgeInsets.all(16.0),
-                                  child: Icon(Icons.settings_applications, color: Colors.white, size: 30.0),
+                                  child: Icon(Icons.people, color: Colors.white, size: 30.0),
                                 )
                             ),
-                            Padding(padding: EdgeInsets.only(bottom: 16.0)),
-                            Text('General', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 24.0)),
-                            Text('Images, Videos', style: TextStyle(color: Colors.black45)),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('Team', style: TextStyle(color: Colors.black,
+                                      fontWeight: FontWeight.w700, fontSize: 24.0)),
+                                  Text('Message', style: TextStyle(color: Colors.black45)),
+                                ]
+                            ),
                           ]
                       ),
                     ),
                   ),
                   _buildTile(
                     Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Column
-                        (
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>
-                          [
-                            Material
-                              (
-                                color: Colors.amber,
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Material(
+                                color: Color(0xffa64452),
                                 shape: CircleBorder(),
-                                child: Padding
-                                  (
-                                  padding: EdgeInsets.all(16.0),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
                                   child: Icon(Icons.notifications, color: Colors.white, size: 30.0),
                                 )
                             ),
-                            Padding(padding: EdgeInsets.only(bottom: 16.0)),
-                            Text('Alerts', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 24.0)),
-                            Text('All ', style: TextStyle(color: Colors.black45)),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('Alerts', style: TextStyle(color: Colors.black,
+                                      fontWeight: FontWeight.w700, fontSize: 24.0)),
+                                  Text('All ', style: TextStyle(color: Colors.black45)),
+                                  ]
+                            ),
                           ]
                       ),
                     ),
+                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => Alerts())),
+                  ),
+                  _buildTile(
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Material(
+                                color: Colors.orangeAccent,
+                                shape: CircleBorder(),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Icon(Icons.local_hospital, color: Colors.white, size: 30.0),
+                                )
+                            ),
+                            Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('Leaves', style: TextStyle(color: Colors.black,
+                                      fontWeight: FontWeight.w700, fontSize: 24.0)),
+                                  Text('Apply ', style: TextStyle(color: Colors.black45)),
+                                ]
+                            ),
+                          ]
+                      ),
+                    ),
+/*                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => Alerts())),*/
                   ),
                   _buildTile(
                     Padding(
@@ -236,7 +274,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children:<Widget>[
-
                             Text("Waiting for sensor...",
                               style: TextStyle(fontSize: 24, color: Colors.black,
                                   fontFamily: 'Montserrat'
@@ -297,9 +334,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           return Column(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: <Widget>[
-                                              Text('Pulse Rate',
-                                                style: TextStyle(fontSize: 14)),
-                                              Text('${currentValue} BPM',
+                                              Row(
+                                                  children: <Widget>[
+                                                    Text('Pulse Rate ',
+                                                      style: TextStyle(fontSize: 16)),
+                                                    Text('❤️', style: TextStyle(color:Colors.red, fontSize: 16)),
+                                                  ]
+                                              ),
+                                              Text('$currentValue BPM',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 24
@@ -331,9 +373,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               )
                             ],
                           ),
-                          Padding(padding: EdgeInsets.only(bottom: 4.0)),
-                          Expanded(
-                            flex: 1,
+                          Padding(padding: EdgeInsets.only(bottom: 15.0)),
+                          tracePulse != null ?
+                          Flexible(
+                            fit: FlexFit.tight,
                             child: Sparkline(
                               data: tracePulse,
                               useCubicSmoothing: true,
@@ -347,6 +390,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [Colors.green[800], Colors.green[200]],
+                              ),
+                            ),
+                          )
+                              : Center(
+                            child: Text("No sensor data...",
+                              style: TextStyle(fontSize: 24, color: Colors.black,
+                                  fontFamily: 'Montserrat'
                               ),
                             ),
                           ),
@@ -368,8 +418,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text('Give Report', style: TextStyle(color: Colors.redAccent)),
-                                Text('Fill the feedback', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 34.0))
+                                Text('Give Report', style: TextStyle(color: Colors.redAccent,fontFamily: "Montserrat",
+                                fontSize: 18)),
+                                Text('Fill the feedback', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 24.0,
+                                    fontFamily: "Montserrat"))
                               ],
                             ),
                             Material(
@@ -391,8 +443,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               staggeredTiles: [
                 StaggeredTile.extent(2, 130.0),
-                StaggeredTile.extent(1, 170.0),
-                StaggeredTile.extent(1, 170.0),
+                StaggeredTile.extent(1, 172.0),
+                StaggeredTile.extent(1, 80.0),
+                StaggeredTile.extent(1, 80.0),
                 StaggeredTile.extent(2, 300.0),
                 StaggeredTile.extent(2, 110.0),
               ],

@@ -1,3 +1,4 @@
+import 'package:cardigo/screen/login.dart';
 import 'package:flutter/material.dart';
 
 class GlobalAppBar extends StatefulWidget implements PreferredSizeWidget  {
@@ -14,13 +15,13 @@ class _GlobalAppBarState extends State<GlobalAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-/*      leading: IconButton(
+      leading: IconButton(
         onPressed: () {
           Navigator.of(context).pop();
         },
         icon: Icon(Icons.arrow_back_ios),
         color: Colors.black,
-      ),*/
+      ),
       backgroundColor: Colors.transparent,
       elevation: 0.0,
       title: Image.asset('assets/cardigo_logo.png',height: 30.0,
@@ -35,10 +36,12 @@ class _GlobalAppBarState extends State<GlobalAppBar> {
       centerTitle: true,
       actions: <Widget>[
         IconButton(
-          onPressed: (){
-          },
-          icon: Icon(Icons.settings),
+          onPressed: ()
+            => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => loginPage())),
+          icon: Icon(Icons.exit_to_app),
           color: Colors.black,
+          iconSize: 26,
         ),
       ],
     );

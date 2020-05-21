@@ -1,3 +1,5 @@
+import 'package:cardigo/utils/bottom_nav.dart';
+import 'package:cardigo/utils/globalappbar.dart';
 import 'package:flutter/material.dart';
 
 class TakeSurvey extends StatefulWidget {
@@ -6,8 +8,15 @@ class TakeSurvey extends StatefulWidget {
 }
 
 class _TakeSurveyState extends State<TakeSurvey> {
+  final appBar = new GlobalAppBar();
+  final bottomBar = new Bottom();
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: appBar,
+      body: Center(
+        child: Text("Feedback"),
+      ),
+    );
   }
 }

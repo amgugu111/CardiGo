@@ -1,6 +1,7 @@
 import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:cardigo/utils/statecontainer.dart';
 import 'package:cardigo/utils/user_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -54,11 +55,12 @@ class _loginPageState extends State<loginPage> {
     print(isLoading);
     setState(() {
       _user = user;
-      if(_user.employeeId == password.trim()) {
+      if(_user.password == password.trim()) {
         setState(() {
           userInherited.updateUserInfo(id:_user.id, employeeId:_user.employeeId,
-              email: _user.email, firstName:_user.firstName, lastName: _user.lastName,
-              avatar: _user.avatar, pulseData: _user.pulseData, hofData:_user.hofData,
+              password: _user.password, email: _user.email, designation: _user.designation,
+              firstName:_user.firstName, lastName: _user.lastName, avatar: _user.avatar,
+              pulseData: _user.pulseData, hofData:_user.hofData,
               blueStatus: _user.blueStatus, feedbackReport:_user.feedbackReport);
           isLoading = false;
           print(isLoading);
@@ -71,7 +73,7 @@ class _loginPageState extends State<loginPage> {
         setState(() {
           isLoading = false;
         });
-        String wrongMsg = "Wrong Password";
+        String wrongMsg = "Wrong ID/Password";
         showToast(wrongMsg);
       }
     });
@@ -90,6 +92,8 @@ class _loginPageState extends State<loginPage> {
   customDialog(){
     showDialog(
       context: context,builder: (_) => AssetGiffyDialog(
+      onlyOkButton: true,
+        buttonOkColor: Color(0xff86BC24),
         image: Image.asset(
           'assets/dialog.gif',
           fit: BoxFit.cover,
@@ -117,6 +121,7 @@ class _loginPageState extends State<loginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfffafafa),
       resizeToAvoidBottomPadding: false,
       body: isLoading ?
       Center(child:
@@ -134,8 +139,13 @@ class _loginPageState extends State<loginPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
           Container(
-            child: Stack(
+            width: MediaQuery.of(context).size.width/2.1,
+            child: Image.asset("assets/hello_there.png")
+            /*Stack(
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.fromLTRB(16.0,
@@ -162,7 +172,7 @@ class _loginPageState extends State<loginPage> {
                       color: Color(0xFF86BC24))),
                 )
               ],
-            ),
+            ),*/
           ),
           Container(
             padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
@@ -217,8 +227,8 @@ class _loginPageState extends State<loginPage> {
                   width: 420,
                   child: Material(
                     borderRadius: BorderRadius.circular(20.0),
-                    shadowColor: Colors.lightGreenAccent,
-                    color: Color(0xFF86BC24),
+                    shadowColor: Colors.grey,
+                    color: Color(0xFF212121),
                     elevation: 7.0,
                     child: GestureDetector(
                       onTap: ()  {

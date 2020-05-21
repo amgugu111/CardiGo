@@ -19,8 +19,8 @@ class _UserProfileState extends State<UserProfile> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           user != null ?
-            Image.network("${user.avatar}"):
-            Image.network("https://gravatar.com/avatar/7dfdb904210b9f127d2fa37d956e4a6d?s=400&d=robohash&r=x"),
+            Image.network("${user.avatar}")
+              : Image.asset("assets/avatar.png"),
           user != null ?
             Text(user.firstName+" "+ user.lastName):
             Text("Hello Boss")
