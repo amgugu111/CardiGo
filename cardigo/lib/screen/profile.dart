@@ -1,8 +1,6 @@
-import 'package:cardigo/screen/login.dart';
 import 'package:cardigo/utils/statecontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:cardigo/utils/user_model.dart';
-import 'package:http/http.dart' as http;
 
 class UserProfile extends StatefulWidget {
 

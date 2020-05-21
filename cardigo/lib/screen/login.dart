@@ -86,6 +86,34 @@ class _loginPageState extends State<loginPage> {
     }
     return null;
   }
+
+  customDialog(){
+    showDialog(
+      context: context,builder: (_) => AssetGiffyDialog(
+        image: Image.asset(
+          'assets/dialog.gif',
+          fit: BoxFit.cover,
+        ),
+        title: Text("Can't login?",
+          style: TextStyle(
+              fontSize: 22.0, fontWeight: FontWeight.w600,fontFamily: 'Montserrat'
+          ),
+        ),
+        description: Text("Please contact your administrator, you can't "
+            "register yourself as it has to be allowed by Deloitte",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: "Montserrat", fontSize: 16,
+          ),
+        ),
+        entryAnimation: EntryAnimation.BOTTOM,
+        onOkButtonPressed: () {
+          Navigator.pop(context);
+        },
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,6 +206,9 @@ class _loginPageState extends State<loginPage> {
                         fontFamily: 'Montserrat',
                         decoration: TextDecoration.underline),
                     ),
+                    onTap: () {
+                      customDialog();
+                    },
                   ),
                 ),
                 SizedBox(height: 40.0),
@@ -223,30 +254,6 @@ class _loginPageState extends State<loginPage> {
               ),
               SizedBox(width: 5.0),
               InkWell(
-                onTap: () {
-                  showDialog(
-                      context: context,builder: (_) => AssetGiffyDialog(
-                    image: Image.asset(
-                      'assets/dialog.gif',
-                      fit: BoxFit.cover,
-                    ),
-                    title: Text("Can't login?",
-                      style: TextStyle(
-                          fontSize: 22.0, fontWeight: FontWeight.w600,fontFamily: 'Montserrat'),
-                    ),
-                    description: Text("Please contact your administrator, you can't "
-                        "register yourself as it has to be allowed by Deloitte",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "Montserrat", fontSize: 16,
-                      ),
-                    ),
-                    entryAnimation: EntryAnimation.BOTTOM,
-                    onOkButtonPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ) );
-                },
                 child: Text(
                   'Contact Admin',
                   style: TextStyle(
@@ -255,6 +262,9 @@ class _loginPageState extends State<loginPage> {
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline),
                 ),
+                onTap: () {
+                  customDialog();
+                },
               )
             ],
           )

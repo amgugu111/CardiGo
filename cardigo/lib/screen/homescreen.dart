@@ -1,9 +1,15 @@
 import 'dart:async';
 import 'dart:convert' show utf8;
+import 'package:cardigo/screen/configure.dart';
+import 'package:cardigo/screen/takesurvey.dart';
 import 'package:cardigo/utils/globalappbar.dart';
+import 'package:cardigo/utils/statecontainer.dart';
+import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:oscilloscope/oscilloscope.dart';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -22,6 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isReady;
   Stream<List<int>> stream;
   List<double> tracePulse = List();
+  static final List<String> chartDropdownItems = [ 'Last Session', 'Last hour', 'Last day' ];
+  String actualDropdown = chartDropdownItems[0];
+  UserModel user;
+  int actualChart = 0;
 
   @override
   void initState() {
@@ -29,17 +39,19 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     isReady = false;
     connectToDevice();
+    print(widget.device);
+
   }
 
   connectToDevice() async {
     if(widget.device == null){
-      _Pop();
+      connectAgain();
       return;
     }
     new Timer(const Duration(seconds: 15), () {
       if(!isReady) {
         disconnectFromDevice();
-        _Pop();
+        connectAgain();
       }
     });
 
@@ -49,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   disconnectFromDevice(){
     if(widget.device == null){
-      _Pop();
+      connectAgain();
       return;
     }
     widget.device.disconnect();
@@ -57,10 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   discoverServices() async{
     if(widget.device == null){
-      _Pop();
+      connectAgain();
       return;
     }
-
     List<BluetoothService> services = await widget.device.discoverServices();
     services.forEach((service) {
       if (service.uuid.toString() == SERVICE_UUID) {
@@ -78,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     if (!isReady) {
-      _Pop();
+      connectAgain();
     }
   }
 
@@ -104,10 +115,10 @@ class _HomeScreenState extends State<HomeScreen> {
             false);
   }
 
-  // ignore: non_constant_identifier_names
+/*  // ignore: non_constant_identifier_names
   _Pop() {
     Navigator.of(context).pop(true);
-  }
+  }*/
 
   String _dataParser(List<int> dataFromDevice) {
     return utf8.decode(dataFromDevice);
@@ -116,74 +127,319 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    Oscilloscope oscilloscope = Oscilloscope(
-      showYAxis: true,
-      padding: 0.0,
-      backgroundColor: Colors.black,
-      traceColor: Colors.white,
-      yAxisMax: 300,
-      yAxisMin: 40,
-      dataSet: tracePulse,
-    );
-
+    final userInherited =  StateContainer.of(context);
+    user = userInherited.user;
     var appBar = new GlobalAppBar();
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         appBar: appBar,
-        body: Container(
-            child: !isReady
-                ? Center(
-              child: Text(
-                "Waiting...",
-                style: TextStyle(fontSize: 24, color: Colors.red),
-              ),
-            )
-                : Container(
-              child: StreamBuilder<List<int>>(
-                stream: stream,
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<int>> snapshot) {
-                  if (snapshot.hasError)
-                    return Text('Error: ${snapshot.error}');
-
-                  if (snapshot.connectionState ==
-                      ConnectionState.active) {
-                    var currentValue = _dataParser(snapshot.data);
-                    tracePulse.add(double.tryParse(currentValue) ?? 0);
-
-                    return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('Current value from Sensor',
-                                        style: TextStyle(fontSize: 14)),
-                                    Text('${currentValue} BPM',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24))
-                                  ]),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: oscilloscope,
+        body: StaggeredGridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12.0,
+                mainAxisSpacing: 12.0,
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                children: <Widget>[
+                  _buildTile(
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>
+                            [
+                              Text(user != null ? 'Hi ${user.firstName}, ':'Hi User',
+                                  style: TextStyle(color: Color(0xff013220),fontWeight: FontWeight.w700, fontSize: 34.0)),
+                              Text(user != null ?'${user.email}':'your email',
+                                  style: TextStyle(color: Colors.black))
+                            ],
+                          ),
+                          Material(
+                            shadowColor: Colors.lightGreenAccent,
+                            borderRadius: BorderRadius.circular(24.0),
+                            child: Center(
+                              child: user != null ?
+                              CircleAvatar(
+                                radius: 30.0,
+                                backgroundImage:
+                                NetworkImage("${user.avatar}"),
+                                backgroundColor: Colors.transparent,
+                              )
+                                  : Image.network("https://gravatar.com/avatar/7dfdb904210b9f127d2fa37d956e4a6d?s=400&d=robohash&r=x"),
                             )
-                          ],
-                        ));
-                  } else {
-                    return Text('Check the stream');
-                  }
-                },
-              ),
-            )),
-      ),
+                          )
+                        ]
+                      ),
+                    ),
+                  ),
+                  _buildTile(
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column
+                        (
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>
+                          [
+                            Material
+                              (
+                                color: Colors.teal,
+                                shape: CircleBorder(),
+                                child: Padding
+                                  (
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Icon(Icons.settings_applications, color: Colors.white, size: 30.0),
+                                )
+                            ),
+                            Padding(padding: EdgeInsets.only(bottom: 16.0)),
+                            Text('General', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 24.0)),
+                            Text('Images, Videos', style: TextStyle(color: Colors.black45)),
+                          ]
+                      ),
+                    ),
+                  ),
+                  _buildTile(
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column
+                        (
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>
+                          [
+                            Material
+                              (
+                                color: Colors.amber,
+                                shape: CircleBorder(),
+                                child: Padding
+                                  (
+                                  padding: EdgeInsets.all(16.0),
+                                  child: Icon(Icons.notifications, color: Colors.white, size: 30.0),
+                                )
+                            ),
+                            Padding(padding: EdgeInsets.only(bottom: 16.0)),
+                            Text('Alerts', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 24.0)),
+                            Text('All ', style: TextStyle(color: Colors.black45)),
+                          ]
+                      ),
+                    ),
+                  ),
+                  _buildTile(
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: !isReady
+                          ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children:<Widget>[
+
+                            Text("Waiting for sensor...",
+                              style: TextStyle(fontSize: 24, color: Colors.black,
+                                  fontFamily: 'Montserrat'
+                              ),
+                            ),
+                            Container(
+                                height: 40.0,
+                                width: 250,
+                                child: Material(
+                                    borderRadius: BorderRadius.circular(40.0),
+                                    shadowColor: Colors.lightGreenAccent,
+                                    color: Color(0xFF86BC24),
+                                    elevation: 7.0,
+                                    child: GestureDetector(
+                                      onTap: ()  => Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (_) => ConfigureBluetooth())),
+                                      child: Center(
+                                        child: Text(
+                                          'Configure again',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Montserrat',
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ),
+                            )
+                          ]
+                        )
+                      )
+                          : Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    child: StreamBuilder<List<int>>(
+                                      stream: stream,
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<List<int>> snapshot) {
+                                        if (snapshot.hasError)
+                                          return Text('Error: ${snapshot.error}');
+
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.active) {
+                                          var currentValue = _dataParser(snapshot.data);
+                                          tracePulse.add(double.tryParse(currentValue) ?? 0);
+                                          return Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text('Pulse Rate',
+                                                style: TextStyle(fontSize: 14)),
+                                              Text('${currentValue} BPM',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 24
+                                                )
+                                              )
+                                            ]
+                                          );
+                                        } else {
+                                          return Text('Check sensor');
+                                        }
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                              DropdownButton(
+                                isDense: true,
+                                value: actualDropdown,
+                                onChanged: (String value) => setState(() {
+                                  actualDropdown = value;
+                                  actualChart = chartDropdownItems.indexOf(value); // Refresh the chart
+                                }),
+                                items: chartDropdownItems.map((String title) {
+                                  return DropdownMenuItem(
+                                    value: title,
+                                    child: Text(title, style: TextStyle(color: Color(0xff013220), fontWeight: FontWeight.w400, fontSize: 14.0)),
+                                  );
+                                }).toList()
+                              )
+                            ],
+                          ),
+                          Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                          Expanded(
+                            flex: 1,
+                            child: Sparkline(
+                              data: tracePulse,
+                              useCubicSmoothing: true,
+                              lineWidth: 5.0,
+                              lineColor: Colors.blue,
+                              pointsMode: PointsMode.last,
+                              pointSize: 5.0,
+                              pointColor: Colors.red,
+                              fillMode: FillMode.below,
+                              fillGradient: new LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Colors.green[800], Colors.green[200]],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ),
+//                    onTap: () => Navigator.of(context).push(
+//                        MaterialPageRoute(builder: (_) => ConfigureBluetooth())),
+                  ),
+                  _buildTile(
+                    Padding
+                      (
+                      padding: const EdgeInsets.all(24.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Give Report', style: TextStyle(color: Colors.redAccent)),
+                                Text('Fill the feedback', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 34.0))
+                              ],
+                            ),
+                            Material(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(24.0),
+                                child: Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Icon(Icons.feedback, color: Colors.white, size: 30.0),
+                                  )
+                                )
+                            )
+                          ]
+                      ),
+                    ),
+                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => TakeSurvey())),
+                  )
+                ],
+              staggeredTiles: [
+                StaggeredTile.extent(2, 130.0),
+                StaggeredTile.extent(1, 170.0),
+                StaggeredTile.extent(1, 170.0),
+                StaggeredTile.extent(2, 300.0),
+                StaggeredTile.extent(2, 110.0),
+              ],
+            )
+        ),
+      );
+  }
+  Widget _buildTile(Widget child, {Function() onTap}) {
+    return Material(
+        elevation: 14.0,
+        borderRadius: BorderRadius.circular(12.0),
+        shadowColor: Color(0x802196F3),
+        child: InkWell
+          (
+          // Do onTap() if it isn't null, otherwise do print()
+            onTap: onTap != null ? () => onTap() : () { print('Not set yet'); },
+            child: child
+        )
+    );
+  }
+
+  connectAgain() {
+    showDialog(
+      context: context,builder: (_) => AssetGiffyDialog(
+        image: Image.asset(
+          'assets/noconnection.gif',
+          fit: BoxFit.cover,
+        ),
+        title: Text("Can't connect?",
+          style: TextStyle(
+              fontSize: 22.0, fontWeight: FontWeight.w600,fontFamily: 'Montserrat'
+          ),
+        ),
+        description: Text("Please configure your device first. Facing issues in pairing?"
+            "Please contact Administrator",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: "Montserrat", fontSize: 16,
+          ),
+        ),
+        entryAnimation: EntryAnimation.BOTTOM,
+        onOkButtonPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context)
+              => ConfigureBluetooth()));
+        },
+      )
     );
   }
 }
-
-
