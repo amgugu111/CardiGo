@@ -1,0 +1,3 @@
+[submodule "node-serve"]
+	path = node-serve
+	url = https://git.heroku.com/cardigo.git

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert' show utf8;
+import 'dart:convert' show json, utf8;
 import 'package:cardigo/screen/alerts.dart';
 import 'package:cardigo/screen/configure.dart';
 import 'package:cardigo/screen/takesurvey.dart';
@@ -9,6 +9,8 @@ import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:flutter_socket_io/flutter_socket_io.dart';
+import 'package:flutter_socket_io/socket_io_manager.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -29,20 +31,33 @@ class _HomeScreenState extends State<HomeScreen> {
   final String CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
   bool isReady;
   Stream<List<int>> stream;
-  List<double> tracePulse = List();
+  List<double> tracePulse;
   static final List<String> chartDropdownItems = [ 'Last Session', 'Last hour', 'Last day' ];
   String actualDropdown = chartDropdownItems[0];
   UserModel user;
   int actualChart = 0;
+  SocketIO socketIO;
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     isReady = false;
     connectToDevice();
     print(widget.device);
+    tracePulse = List<double>();
 
+    //Creating the socket
+    socketIO = SocketIOManager().createSocketIO(
+      'https://cardigo.herokuapp.com','/'
+    );
+    //Call init before doing anything with socket
+    socketIO.init();
+    socketIO.subscribe('receive_pulse', (jsonData) {
+      Map<double, dynamic> data = json.decode(jsonData);
+      this.setState(() => tracePulse.add(data['tracepulse']));
+    });
+    //Connect to the socket
+    socketIO.connect();
+    super.initState();
   }
 
   connectToDevice() async {
@@ -128,13 +143,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final userInherited =  StateContainer.of(context);
     user = userInherited.user;
     var appBar = new GlobalAppBar();
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
+          backgroundColor: Color(0xfffafafa),
         appBar: appBar,
         body: StaggeredGridView.count(
                 crossAxisCount: 2,
@@ -331,6 +346,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ConnectionState.active) {
                                           var currentValue = _dataParser(snapshot.data);
                                           tracePulse.add(double.tryParse(currentValue) ?? 0);
+                                          if(tracePulse!=null){
+                                            socketIO.sendMessage(
+                                                'send_pulse', json.encode({'tracepulse': tracePulse}));
+                                          }
                                           return Column(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: <Widget>[
@@ -407,8 +426,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //                        MaterialPageRoute(builder: (_) => ConfigureBluetooth())),
                   ),
                   _buildTile(
-                    Padding
-                      (
+                    Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

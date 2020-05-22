@@ -229,7 +229,7 @@ class _loginPageState extends State<loginPage> {
                     borderRadius: BorderRadius.circular(20.0),
                     shadowColor: Colors.grey,
                     color: Color(0xFF212121),
-                    elevation: 7.0,
+                    elevation: 14.0,
                     child: GestureDetector(
                       onTap: ()  {
                         setState(() {

@@ -1,5 +1,6 @@
 import 'package:cardigo/screen/homescreen.dart';
 import 'package:cardigo/screen/login.dart';
+import 'package:cardigo/screen/profile.dart';
 import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:cardigo/utils/statecontainer.dart';
 import 'package:flutter/material.dart';
