@@ -1,3 +1,4 @@
+import 'package:cardigo/screen/homescreen.dart';
 import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:cardigo/utils/statecontainer.dart';
 import 'package:cardigo/utils/user_model.dart';
@@ -64,6 +65,9 @@ class _loginPageState extends State<loginPage> {
               blueStatus: _user.blueStatus, feedbackReport:_user.feedbackReport);
           isLoading = false;
           print(isLoading);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context)
+              => HomeScreen()));
           Navigator.push(context,
               MaterialPageRoute(builder: (context)
               => Bottom()));
@@ -145,34 +149,6 @@ class _loginPageState extends State<loginPage> {
           Container(
             width: MediaQuery.of(context).size.width/2.1,
             child: Image.asset("assets/hello_there.png")
-            /*Stack(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.fromLTRB(16.0,
-                      MediaQuery.of(context).size.height/9, 0.0, 0.0),
-                  child: Text('Hello',
-                      style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold)),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(16,
-                      MediaQuery.of(context).size.height/6, 0.0, 0.0),
-                  child: Text('There',
-                      style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold)),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(
-                    MediaQuery.of(context).size.width/2.4,
-                    MediaQuery.of(context).size.height/6, 0.0, 0.0),
-                  child: Text('.',
-                    style: TextStyle(
-                      fontSize: 80.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF86BC24))),
-                )
-              ],
-            ),*/
           ),
           Container(
             padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),

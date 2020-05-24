@@ -3,6 +3,7 @@ import 'dart:convert' show json, utf8;
 import 'package:cardigo/screen/alerts.dart';
 import 'package:cardigo/screen/configure.dart';
 import 'package:cardigo/screen/takesurvey.dart';
+import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:cardigo/utils/globalappbar.dart';
 import 'package:cardigo/utils/statecontainer.dart';
 import 'package:cardigo/utils/user_model.dart';
@@ -42,9 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     isReady = false;
     connectToDevice();
-    print(widget.device);
+//    print(widget.device);
     tracePulse = List<double>();
-
     //Creating the socket
     socketIO = SocketIOManager().createSocketIO(
       'https://cardigo.herokuapp.com','/'
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
     socketIO.init();
     socketIO.subscribe('receive_pulse', (jsonData) {
       Map<double, dynamic> data = json.decode(jsonData);
-      this.setState(() => tracePulse.add(data['tracepulse']));
+      this.setState(() => tracePulse.add(data['tracepulse']),);
     });
     //Connect to the socket
     socketIO.connect();
@@ -303,8 +303,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Color(0xFF86BC24),
                                     elevation: 7.0,
                                     child: GestureDetector(
-                                      onTap: ()  => Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (_) => ConfigureBluetooth())),
+                                      onTap: ()  {
+                                        setState(() {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context)
+                                              => ConfigureBluetooth()));
+
+                                        });
+                                      },
                                       child: Center(
                                         child: Text(
                                           'Configure again',
@@ -346,10 +352,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ConnectionState.active) {
                                           var currentValue = _dataParser(snapshot.data);
                                           tracePulse.add(double.tryParse(currentValue) ?? 0);
+
+                                          //sending tracefulse with socket
                                           if(tracePulse!=null){
                                             socketIO.sendMessage(
                                                 'send_pulse', json.encode({'tracepulse': tracePulse}));
                                           }
+
                                           return Column(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: <Widget>[
@@ -393,7 +402,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           Padding(padding: EdgeInsets.only(bottom: 15.0)),
-                          tracePulse != null ?
+                          tracePulse!= null ?
                           Flexible(
                             fit: FlexFit.tight,
                             child: Sparkline(
@@ -413,7 +422,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           )
                               : Center(
-                            child: Text("No sensor data...",
+                            child: Text("Loading...",
                               style: TextStyle(fontSize: 24, color: Colors.black,
                                   fontFamily: 'Montserrat'
                               ),
@@ -511,6 +520,24 @@ class _HomeScreenState extends State<HomeScreen> {
               => ConfigureBluetooth()));
         },
       )
+    );
+  }
+
+  plotTrace() {
+    Sparkline(
+      data: tracePulse,
+      useCubicSmoothing: true,
+      lineWidth: 5.0,
+      lineColor: Colors.blue,
+      pointsMode: PointsMode.last,
+      pointSize: 5.0,
+      pointColor: Colors.red,
+      fillMode: FillMode.below,
+      fillGradient: new LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Colors.green[800], Colors.green[200]],
+      ),
     );
   }
 }

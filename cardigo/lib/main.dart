@@ -1,6 +1,7 @@
 import 'package:cardigo/screen/homescreen.dart';
 import 'package:cardigo/screen/login.dart';
 import 'package:cardigo/screen/profile.dart';
+import 'package:cardigo/screen/takesurvey.dart';
 import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:cardigo/utils/statecontainer.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         SPLASH_SCREEN: (BuildContext context) => AnimatedSplashScreen(),
-        LOGIN_SCREEN: (BuildContext context) => Bottom(),
+        LOGIN_SCREEN: (BuildContext context) => TakeSurvey(),
+        BOTTOM_NAV: (BuildContext context) => Bottom(),
       },
     );
   }
