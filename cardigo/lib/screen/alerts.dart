@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cardigo/utils/globalappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';

@@ -54,6 +54,24 @@ class _UserProfileState extends State<UserProfile> {
                   style: TextStyle(color: Colors.black87,fontSize: 25,
                   fontFamily: "Montserrat",fontWeight: FontWeight.w500,
                   letterSpacing: 1.2),),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(user != null ? "DEL ID: ${user.firstName} ${user.lastName}"
+                      : "No ID",
+                    style: TextStyle(color: Colors.black54,fontSize: 16,
+                        fontFamily: "Montserrat"
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(user != null ? "Email: ${user.email}"
+                      : "No Email",
+                    style: TextStyle(color: Colors.black54,fontSize: 16,
+                        fontFamily: "Montserrat"
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -87,20 +105,20 @@ class _UserProfileState extends State<UserProfile> {
                             Material(
                                 shadowColor: Colors.grey,
                                 elevation: 5,
-                                color: Colors.red,
+                                color: Color(0xffe57373),
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Center(
                                     child: Padding(
                                       padding: EdgeInsets.all(12.0),
-                                      child: Icon(Icons.feedback, color: Colors.white, size: 25.0),
+                                      child: Image.asset("assets/icons/deadline.png"),
                                     )
                                 )
                             ),
-                            Text('Give Report', style: TextStyle(color: Colors.redAccent,
-                                fontFamily: "Montserrat", fontSize: 18)),
+                            Text('Deadlines', style: TextStyle(color: Color(0xffe57373),
+                                fontFamily: "Montserrat", fontSize: 18,fontWeight: FontWeight.w700)),
                             Container(
-                              height: 40,
-                              width: 40,
+                              height: 30,
+                              width: 30,
                               decoration: new BoxDecoration(
                                   boxShadow: [BoxShadow(color: Colors.grey,
                                       blurRadius: 5)],
@@ -127,20 +145,20 @@ class _UserProfileState extends State<UserProfile> {
                             Material(
                                 shadowColor: Colors.grey,
                                 elevation: 5,
-                                color: Colors.red,
+                                color: Colors.orangeAccent,
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Center(
                                     child: Padding(
                                       padding: EdgeInsets.all(12.0),
-                                      child: Icon(Icons.feedback, color: Colors.white, size: 25.0),
+                                      child: Image.asset("assets/icons/message.png"),
                                     )
                                 )
                             ),
-                            Text('Give Report', style: TextStyle(color: Colors.redAccent,
-                                fontFamily: "Montserrat", fontSize: 18)),
+                            Text('Messages', style: TextStyle(color: Color(0xffff8f00),
+                                fontFamily: "Montserrat", fontSize: 18, fontWeight: FontWeight.w700)),
                             Container(
-                              height: 40,
-                              width: 40,
+                              height: 30,
+                              width: 30,
                               decoration: new BoxDecoration(
                                 boxShadow: [BoxShadow(color: Colors.grey,
                                       blurRadius: 5)],
@@ -167,20 +185,20 @@ class _UserProfileState extends State<UserProfile> {
                             Material(
                                 shadowColor: Colors.grey,
                                 elevation: 5,
-                                color: Colors.red,
+                                color: Color(0xff64b5f6),
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Center(
                                     child: Padding(
                                       padding: EdgeInsets.all(12.0),
-                                      child: Icon(Icons.feedback, color: Colors.white, size: 25.0),
+                                      child: Image.asset("assets/icons/payslip.png"),
                                     )
                                 )
                             ),
-                            Text('Give Report', style: TextStyle(color: Colors.redAccent,
-                                fontFamily: "Montserrat", fontSize: 18)),
+                            Text('Pay Slips', style: TextStyle(color: Color(0xff1565c0),
+                                fontFamily: "Montserrat", fontSize: 18,fontWeight: FontWeight.w700)),
                             Container(
-                              height: 40,
-                              width: 40,
+                              height: 30,
+                              width: 30,
                               decoration: new BoxDecoration(
                                   boxShadow: [BoxShadow(color: Colors.grey,
                                       blurRadius: 5)],
@@ -207,60 +225,20 @@ class _UserProfileState extends State<UserProfile> {
                             Material(
                                 shadowColor: Colors.grey,
                                 elevation: 5,
-                                color: Colors.red,
+                                color: Color(0xff80cbc4),
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Center(
                                     child: Padding(
                                       padding: EdgeInsets.all(12.0),
-                                      child: Icon(Icons.feedback, color: Colors.white, size: 25.0),
+                                      child: Image.asset("assets/icons/refund.png"),
                                     )
                                 )
                             ),
-                            Text('Give Report', style: TextStyle(color: Colors.redAccent,
-                                fontFamily: "Montserrat", fontSize: 18)),
+                            Text('Reimbursements', style: TextStyle(color: Color(0xff009688),
+                                fontFamily: "Montserrat", fontSize: 18, fontWeight: FontWeight.w700)),
                             Container(
-                              height: 40,
-                              width: 40,
-                              decoration: new BoxDecoration(
-                                  boxShadow: [BoxShadow(color: Colors.grey,
-                                      blurRadius: 5)],
-                                  shape: BoxShape.circle,
-                                  color: Colors.black38
-                              ),
-                              child: Center(
-                                child: Icon(Icons.arrow_forward_ios,
-                                  color: Colors.white,),
-                              ),
-                            ),
-                          ]
-                      ),
-                    ),
-                  ),
-                  _buildTile(
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width/14,
-                          10, MediaQuery.of(context).size.width/14, 10),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Material(
-                                shadowColor: Colors.grey,
-                                elevation: 5,
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(16.0),
-                                child: Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(12.0),
-                                      child: Icon(Icons.feedback, color: Colors.white, size: 25.0),
-                                    )
-                                )
-                            ),
-                            Text('Give Report', style: TextStyle(color: Colors.redAccent,
-                                fontFamily: "Montserrat", fontSize: 18)),
-                            Container(
-                              height: 40,
-                              width: 40,
+                              height: 30,
+                              width: 30,
                               decoration: new BoxDecoration(
                                   boxShadow: [BoxShadow(color: Colors.grey,
                                       blurRadius: 5)],
@@ -278,7 +256,6 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                 ],
                   staggeredTiles: [
-                    StaggeredTile.extent(2, MediaQuery.of(context).size.width/7),
                     StaggeredTile.extent(2, MediaQuery.of(context).size.width/7),
                     StaggeredTile.extent(2, MediaQuery.of(context).size.width/7),
                     StaggeredTile.extent(2, MediaQuery.of(context).size.width/7),
@@ -303,19 +280,3 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 }
-
-
-/*
-Center(
-child: Column(
-mainAxisAlignment: MainAxisAlignment.center,
-children: <Widget>[
-user != null ?
-Image.network("${user.avatar}")
-: Image.asset("assets/avatar.png"),
-user != null ?
-Text(user.firstName+" "+ user.lastName):
-Text("Hello Boss")
-],
-),
-);*/

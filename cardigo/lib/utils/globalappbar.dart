@@ -26,13 +26,6 @@ class _GlobalAppBarState extends State<GlobalAppBar> {
       elevation: 0.0,
       title: Image.asset('assets/cardigo_logo.png',height: 30.0,
         fit: BoxFit.scaleDown,),
-      /*Text('CardiGo',
-          style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 25.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black)
-      ),*/
       centerTitle: true,
       actions: <Widget>[
         IconButton(

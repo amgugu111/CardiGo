@@ -67,9 +67,6 @@ class _loginPageState extends State<loginPage> {
           print(isLoading);
           Navigator.push(context,
               MaterialPageRoute(builder: (context)
-              => HomeScreen()));
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context)
               => Bottom()));
         });
       }

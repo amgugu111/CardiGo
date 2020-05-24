@@ -28,20 +28,30 @@ class _TakeSurveyState extends State<TakeSurvey> {
         padding: EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
-            FormBuilder(
-              // context,
-              key: _fbKey,
-              //autovalidate: true,
-              initialValue: {
-                'movie_rating': 3,
-              },
+            FormBuilder( key: _fbKey,
+
+//              autovalidate: true,
+//              initialValue: {
+//                'rating_one': 3,
+//                'rating_two': 3,
+//                'rating_three': 3,
+//                'rating_four': 3,
+//                'rating_five': 3,
+//                'rating_six': 3,
+//                'rating_seven': 3,
+//                'rating_eight': 3,
+//                'rating_nine': 3,
+//                'rating_ten': 3,
+//              },
+
               readOnly: false,
               child: Column(
                 children: <Widget>[
+                  SizedBox(height: 15),
                   FormBuilderChoiceChip(
-                    attribute: 'choice_chip',
+                    attribute: 'question_1',
                     selectedColor: Color(0xFF86BC24),
-                    elevation: 10,
+                    elevation: 5,
                     spacing: 20.0,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     decoration: InputDecoration(
@@ -56,12 +66,13 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           value: 'Yes',
                         child: Text('Yes'),),
                       FormBuilderFieldOption(
-                          value: 'No', child: Text('No')),
+                          value: 'No',
+                          child: Text('No')),
                     ],
                   ),
                   SizedBox(height: 15),
                   FormBuilderCustomField(
-                    attribute: 'custom',
+                    attribute: 'question_2',
                     valueTransformer: (val) {
                       if (val == "Other") {
                         return _specifyTextFieldKey.currentState.value;
@@ -129,31 +140,29 @@ class _TakeSurveyState extends State<TakeSurvey> {
                   ),
                   SizedBox(height: 15),
                   FormBuilderTextField(
-                    attribute: "text",
+                    attribute: "question_3",
                     decoration: InputDecoration(
                       labelText:
                       "What is the most stressful aspect of your job?",
                       labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
-                          color: Color(0xff333333), fontSize: 20),
+                          color: Color(0xff333333), fontSize: 16),
                     ),
                     onChanged: _onChanged,
-                    valueTransformer: (text) {
-                      return text == null ? null : num.tryParse(text);
-                    },
                     validators: [
                       FormBuilderValidators.required(),
                       // FormBuilderValidators.max(70),
                       FormBuilderValidators.minLength(2, allowEmpty: true),
                     ],
                     keyboardType: TextInputType.text,
+
                   ),
                   SizedBox(height: 15),
                   FormBuilderChoiceChip(
-                    attribute: 'choice_chip',
+                    attribute: 'question_4',
                     selectedColor: Color(0xFF86BC24),
-                    elevation: 10,
+                    elevation: 5,
                     spacing: 20.0,
                     decoration: InputDecoration(
                       labelText: 'How long have you had this particular job stress?',
@@ -178,9 +187,9 @@ class _TakeSurveyState extends State<TakeSurvey> {
                   SizedBox(height: 15),
                   FormBuilderChoiceChip(
                     selectedColor: Color(0xFF86BC24),
-                    elevation: 10,
+                    elevation: 5,
                     spacing: 20.0,
-                    attribute: 'choice_chip',
+                    attribute: 'question_5',
                     decoration: InputDecoration(
                       labelText: 'How would you rate the level of your job stress?',
                       labelStyle: TextStyle(
@@ -205,7 +214,14 @@ class _TakeSurveyState extends State<TakeSurvey> {
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.bold,
                         color: Color(0xff333333), fontSize: 20),),
-                  SizedBox(height: 15),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("Give a score between 1 - 5",
+                    style:TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Color(0xff333333), fontSize: 16),),
+                  SizedBox(height: 10),
                   FormBuilderSegmentedControl(
                     decoration:
                     InputDecoration(labelText: "I have very long working hours",
@@ -213,7 +229,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 20),),
-                    attribute: "movie_rating",
+                    attribute: "rating_1",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -234,7 +250,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 20),),
-                    attribute: "movie_rating",
+                    attribute: "rating_2",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -255,7 +271,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 20),),
-                    attribute: "movie_rating",
+                    attribute: "rating_3",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -276,7 +292,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 20),),
-                    attribute: "movie_rating",
+                    attribute: "rating_4",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -297,7 +313,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 20),),
-                    attribute: "movie_rating",
+                    attribute: "rating_5",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -318,7 +334,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 20),),
-                    attribute: "movie_rating",
+                    attribute: "rating_6",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -332,12 +348,19 @@ class _TakeSurveyState extends State<TakeSurvey> {
                     onChanged: _onChanged,
                   ),
                   SizedBox(height: 15),
-                  Text("Please select what you feel about your control over the work that is assigned to you",
+                  Text("Please select what you feel about your control over the work that is assigned to you:",
                     style:TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.bold,
                         color: Color(0xff333333), fontSize: 20),),
-                  SizedBox(height: 15),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("Give a score between 1 - 5",
+                    style:TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Color(0xff333333), fontSize: 16),),
+                  SizedBox(height: 10),
                   FormBuilderSegmentedControl(
                     decoration:
                     InputDecoration(labelText: "I have lack of control over the work assigned to me",
@@ -345,7 +368,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 19),),
-                    attribute: "movie_rating",
+                    attribute: "rating_7",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -366,7 +389,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 20),),
-                    attribute: "movie_rating",
+                    attribute: "rating_8",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -387,7 +410,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 20),),
-                    attribute: "movie_rating",
+                    attribute: "rating_9",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -408,7 +431,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                           color: Color(0xff333333), fontSize: 20),),
-                    attribute: "movie_rating",
+                    attribute: "rating_10",
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     options: List.generate(5, (i) => i + 1)
                         .map((number) => FormBuilderFieldOption(
@@ -423,9 +446,9 @@ class _TakeSurveyState extends State<TakeSurvey> {
                   ),
                   SizedBox(height: 15),
                   FormBuilderChoiceChip(
-                    attribute: 'choice_chip',
+                    attribute: 'question_6',
                     selectedColor: Color(0xFF86BC24),
-                    elevation: 10,
+                    elevation: 5,
                     spacing: 20.0,
                     decoration: InputDecoration(
                       labelText: 'Do you feel you have a healthy work-life balance?',
@@ -443,7 +466,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                   ),
                   SizedBox(height: 15),
                   FormBuilderCustomField(
-                    attribute: 'custom',
+                    attribute: 'question_7',
                     valueTransformer: (val) {
                       if (val == "Other") {
                         return _specifyTextFieldKey.currentState.value;
@@ -509,7 +532,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                   ),
                   SizedBox(height: 15),
                   FormBuilderCustomField(
-                    attribute: 'custom',
+                    attribute: 'question_8',
                     valueTransformer: (val) {
                       if (val == "Other") {
                         return _specifyTextFieldKey.currentState.value;
@@ -521,7 +544,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                         var languages = [
                           "I am uncertain about my future",
                           "I sense a lack of job security",
-                          " am not sure of the management techniques",
+                          "I am not sure of the management techniques",
                           "In 5 years I see myself at a decision making position.",
                           "Other (Please Specify)"
                         ];
@@ -529,11 +552,11 @@ class _TakeSurveyState extends State<TakeSurvey> {
                         return InputDecorator(
                           decoration: InputDecoration(
                               labelText: "Where do you see yourself in 5 years "
-                                  "in this organization?",
+                                  "in Deloitte?",
                             labelStyle: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff333333), fontSize: 20),),
+                                color: Color(0xff333333), fontSize: 16),),
                           child: Column(
                             children: languages
                                 .map(
@@ -575,19 +598,16 @@ class _TakeSurveyState extends State<TakeSurvey> {
                   ),
                   SizedBox(height: 15),
                   FormBuilderTextField(
-                    attribute: "text",
+                    attribute: "question_9",
                     decoration: InputDecoration(
                       labelText:
                       "What are the positive aspects of your job?",
                       labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
-                          color: Color(0xff333333), fontSize: 20),
+                          color: Color(0xff333333), fontSize: 16),
                     ),
                     onChanged: _onChanged,
-                    valueTransformer: (text) {
-                      return text == null ? null : num.tryParse(text);
-                    },
                     validators: [
                       FormBuilderValidators.required(),
                       // FormBuilderValidators.max(70),
@@ -597,20 +617,17 @@ class _TakeSurveyState extends State<TakeSurvey> {
                   ),
                   SizedBox(height: 15),
                   FormBuilderTextField(
-                    attribute: "text",
+                    attribute: "question_10",
                     decoration: InputDecoration(
                       labelText:
-                      "What are the three things you would like the organization"
-                          " to do differently to help you cope with work stress? ",
+                      "What should Deloitte"
+                          " do to help you cope with work stress?",
                       labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff333333), fontSize: 20),
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff333333), fontSize: 16),
                     ),
                     onChanged: _onChanged,
-                    valueTransformer: (text) {
-                      return text == null ? null : num.tryParse(text);
-                    },
                     validators: [
                       FormBuilderValidators.required(),
                       // FormBuilderValidators.max(70),
@@ -618,19 +635,7 @@ class _TakeSurveyState extends State<TakeSurvey> {
                     ],
                     keyboardType: TextInputType.text,
                   ),
-                  SizedBox(height: 15),
-                  FormBuilderSignaturePad(
-                    backgroundColor: Color(0xffeeeeee),
-                    decoration: InputDecoration(labelText: "Signature",
-                      labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff333333), fontSize: 20),),
-                    attribute: "signature",
-                    // height: 250,
-                    clearButtonText: "Start Over",
-                    onChanged: _onChanged,
-                  ),
+
                   SizedBox(height: 15),
                 ],
               ),

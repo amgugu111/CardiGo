@@ -43,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     isReady = false;
     connectToDevice();
-//    print(widget.device);
     tracePulse = List<double>();
     //Creating the socket
     socketIO = SocketIOManager().createSocketIO(
@@ -131,11 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ) ??
             false);
   }
-
-/*  // ignore: non_constant_identifier_names
-  _Pop() {
-    Navigator.of(context).pop(true);
-  }*/
 
   String _dataParser(List<int> dataFromDevice) {
     return utf8.decode(dataFromDevice);
@@ -431,8 +425,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       )
                     ),
-//                    onTap: () => Navigator.of(context).push(
-//                        MaterialPageRoute(builder: (_) => ConfigureBluetooth())),
                   ),
                   _buildTile(
                     Padding(

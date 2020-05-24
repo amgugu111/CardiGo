@@ -42,7 +42,6 @@ class BluetoothOffScreen extends StatelessWidget {
     final appBar = GlobalAppBar();
     return Scaffold(
       appBar: appBar,
-//      backgroundColor: Color(0xFF86BC24),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
