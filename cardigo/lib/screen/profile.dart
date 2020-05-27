@@ -32,8 +32,8 @@ class _UserProfileState extends State<UserProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    height: MediaQuery.of(context).size.width/3,
-                    width: MediaQuery.of(context).size.width/3,
+                    height: MediaQuery.of(context).size.width/3.5,
+                    width: MediaQuery.of(context).size.width/3.5,
                     decoration: BoxDecoration(
                       color: Color(0xfffafafa),
                       boxShadow: [BoxShadow(color: Color(0xffced4da),
@@ -47,11 +47,11 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 20,
                   ),
                   Text(user != null ? user.firstName+" "+ user.lastName
                       : "Hello Boss",
-                  style: TextStyle(color: Colors.black87,fontSize: 25,
+                  style: TextStyle(color: Colors.black87,fontSize: 20,
                   fontFamily: "Montserrat",fontWeight: FontWeight.w500,
                   letterSpacing: 1.2),),
                   SizedBox(

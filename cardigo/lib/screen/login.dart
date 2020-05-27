@@ -62,7 +62,7 @@ class _loginPageState extends State<loginPage> {
               password: _user.password, email: _user.email, designation: _user.designation,
               firstName:_user.firstName, lastName: _user.lastName, avatar: _user.avatar,
               pulseData: _user.pulseData, hofData:_user.hofData,
-              blueStatus: _user.blueStatus, feedbackReport:_user.feedbackReport);
+              blueStatus: _user.blueStatus,);
           isLoading = false;
           print(isLoading);
           Navigator.push(context,

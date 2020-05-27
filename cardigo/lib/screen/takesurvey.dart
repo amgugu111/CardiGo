@@ -1,7 +1,15 @@
+import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:cardigo/utils/globalappbar.dart';
+import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:cardigo/utils/statecontainer.dart';
+
+
+import 'login.dart';
 
 class TakeSurvey extends StatefulWidget {
   @override
@@ -9,6 +17,7 @@ class TakeSurvey extends StatefulWidget {
 }
 
 class _TakeSurveyState extends State<TakeSurvey> {
+  UserModel user;
   var data;
   bool autoValidate = true;
   bool readOnly = false;
@@ -652,7 +661,16 @@ class _TakeSurveyState extends State<TakeSurvey> {
                     ),
                     onPressed: () {
                       if (_fbKey.currentState.saveAndValidate()) {
-                        print(_fbKey.currentState.value);
+                        Map finalFeedback = _fbKey.currentState.value;
+                        print('Feedback is $finalFeedback');
+                        String sentMsg = 'Your feedback has been sent';
+                        showToast(sentMsg);
+                        setState(() {
+                          sendFeedback(finalFeedback);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context)
+                              => Bottom()));
+                        });
                       }
                     },
                   ),
@@ -683,4 +701,10 @@ class _TakeSurveyState extends State<TakeSurvey> {
       ),
     );
   }
+  sendFeedback (Map finalFeedback) {
+    final userInherited = StateContainer.of(context);
+    user = userInherited.user;
+    userInherited.updateUserInfo(feedbackReport: finalFeedback);
+  }
+
 }

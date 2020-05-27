@@ -20,7 +20,7 @@ class UserModel {
   int pulseData;
   String hofData;
   bool blueStatus;
-  String feedbackReport;
+  Map feedbackReport;
   String error;
 
   UserModel({
@@ -51,7 +51,6 @@ class UserModel {
     pulseData: json["pulse_data"],
     hofData: json["hof_data"],
     blueStatus: json["blue_status"],
-    feedbackReport: json["feedback_report"],
     error: json["error"],
   );
 
@@ -67,7 +66,6 @@ class UserModel {
     "pulse_data": pulseData,
     "hof_data": hofData,
     "blue_status": blueStatus,
-    "feedback_report": feedbackReport,
     "error": error,
   };
 }

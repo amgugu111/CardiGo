@@ -1,0 +1,6 @@
+
+---
+applications:
+ - name: cardigo
+   random-route: true
+   memory: 256M 

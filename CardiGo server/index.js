@@ -13,6 +13,9 @@ socketio.on("connection", (userSocket) => {
     userSocket.on("send_pulse", (data) => {
         userSocket.broadcast.emit("receive_pulse", data)
     })
+    userSocket.on("send_feedback", (data) => {
+        userSocket.broadcast.emit("receive_feedback", data)
+    })
 })
 
 http.listen(process.env.PORT)

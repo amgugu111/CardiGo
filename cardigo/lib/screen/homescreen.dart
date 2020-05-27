@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isReady;
   Stream<List<int>> stream;
   List<double> tracePulse;
+  Map feedbackSent;
   static final List<String> chartDropdownItems = [ 'Last Session', 'Last hour', 'Last day' ];
   String actualDropdown = chartDropdownItems[0];
   UserModel user;
@@ -44,9 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
     isReady = false;
     connectToDevice();
     tracePulse = List<double>();
+    feedbackSent = Map();
     //Creating the socket
     socketIO = SocketIOManager().createSocketIO(
-      'https://cardigo.herokuapp.com','/'
+      'https://cardigo.eu-gb.cf.appdomain.cloud','/'
     );
     //Call init before doing anything with socket
     socketIO.init();
@@ -56,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     //Connect to the socket
     socketIO.connect();
+
     super.initState();
   }
 
@@ -201,8 +204,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 shape: CircleBorder(),
                                 child: Padding
                                   (
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Icon(Icons.people, color: Colors.white, size: 30.0),
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Icon(Icons.people, color: Colors.white, size: 25.0),
                                 )
                             ),
                             Column(
@@ -216,6 +219,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ]
                       ),
                     ),
+                    onTap: () {
+/*                      print('This is feedback to be sent ${user.feedbackReport}');
+                      print(user.feedbackReport);*/
+                      feedbackSent = user.feedbackReport;
+                      if(feedbackSent!=null){
+                        socketIO.sendMessage(
+                            'send_feedback', json.encode({'feedbackSent': feedbackSent}));
+                      }
+                    },
                   ),
                   _buildTile(
                     Padding(
@@ -347,12 +359,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                           var currentValue = _dataParser(snapshot.data);
                                           tracePulse.add(double.tryParse(currentValue) ?? 0);
 
-                                          //sending tracefulse with socket
+                                          //sending tracepulse with socket
                                           if(tracePulse!=null){
                                             socketIO.sendMessage(
                                                 'send_pulse', json.encode({'tracepulse': tracePulse}));
                                           }
-
                                           return Column(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: <Widget>[

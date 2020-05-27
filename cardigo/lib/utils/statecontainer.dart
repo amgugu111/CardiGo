@@ -19,9 +19,11 @@ class StateContainerState extends State<StateContainer> {
   UserModel user;
 
   // ignore: missing_return
-  Future updateUserInfo({id, employeeId,password,email,designation,firstName,lastName,avatar,pulseData,hofData,blueStatus,feedbackReport}){
+  Future updateUserInfo({id, employeeId,password,email,designation,firstName,
+    lastName,avatar,pulseData,hofData,blueStatus,feedbackReport}){
     if(user == null) {
-      user = new UserModel(id:id, employeeId:employeeId,password:password,email:email,designation:designation,firstName:firstName,
+      user = new UserModel(id:id, employeeId:employeeId,password:password,
+          email:email,designation:designation,firstName:firstName,
           lastName:lastName,avatar:avatar,pulseData:pulseData,hofData:hofData,
           blueStatus:blueStatus,feedbackReport:feedbackReport);
       setState(() {
