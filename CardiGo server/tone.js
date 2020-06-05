@@ -20,8 +20,6 @@ const toneAnalyzer = new ToneAnalyzerV3({
     url: 'https://api.eu-gb.tone-analyzer.watson.cloud.ibm.com/instances/6b05ee63-5752-49ed-9a60-1cb1bf674f04',
   });
 
-const text = 'If you are sad, think about the poorest person.';
-
 function getFeedback(data) {
     console.log('inside function')
     toneText = data.feedbackSent.question_3.toString();
