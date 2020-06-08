@@ -1,5 +1,6 @@
 # CardiGo
 An employee health system
+Detection of Stress with real-time Heart Rate, Tone Analyzing and Hand-over Face Gesture Recognition in Workplace.
 
 IBMid: ashish.mohapatra05@gmail.com
 Password: TechnoUtsav3@CardiGo
