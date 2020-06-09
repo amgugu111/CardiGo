@@ -1,12 +1,16 @@
 const app = require('express')()
 const http = require('http').createServer(app)
+const path = require('path');
+const router = app.Router();
 
-app.get('/', (req, res) => {
-    res.render('login');
-})  
+ 
+router.get('/',function(req,res){
+    res.sendFile(path.join(__dirname+'/login.html'));
+    //__dirname : It will resolve to your project folder.
+  });
 
 //POST login data
-app.post('/login', function(req, res) {
+router.post('/login', function(req, res) {
     if(req.body.username === "admin@xyz.com" && req.body.password === "admin"){
       res.redirect('https://deloitte.now.sh/');
     } else {
