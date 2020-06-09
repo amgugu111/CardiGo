@@ -1,13 +1,12 @@
 const app = require('express')()
 const http = require('http').createServer(app)
-var router = express.Router();
 
 app.get('/', (req, res) => {
     res.render('login');
 })  
 
 //POST login data
-router.post('/login', function(req, res) {
+app.post('/login', function(req, res) {
     if(req.body.username === "admin@xyz.com" && req.body.password === "admin"){
       res.redirect('https://deloitte.now.sh/');
     } else {
