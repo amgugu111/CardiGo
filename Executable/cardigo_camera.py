@@ -8,7 +8,9 @@ from PIL import Image, ImageTk
 from urllib.request import urlopen
 from io import BytesIO
 import base64
+import json
 
+#SelectPath method to browse and select path to store live image 
 def selectPath():
 	dir_name = filedialog.askdirectory(title='Select Path')
 	directry='live'
@@ -21,22 +23,27 @@ def selectPath():
 	    print('Dir already exists'+path)
 	    return path
 
+#runApp method which captures frames and send it to NodeRed
 def runApp():
 	path = selectPath()
 	delId = delIdText.get().strip()
 	print(delId)
 	i=0
-	for i in range (6):
+	for i in range (960):
 		videoCaptureObject = cv2.VideoCapture(0)
 		ret,frame = videoCaptureObject.read()
 		final_path = os.path.join(path,"picture.jpeg")
 		cv2.imwrite(final_path,frame)
 		image_file_descriptor = open(final_path, 'rb')
 		files = {'image/jpeg': image_file_descriptor}
-		url = 'https://node-red-vlxgg.eu-gb.mybluemix.net/mns'
-		r=requests.post(url, files=files)
-		print(r.status_code)
+		imgUrl = 'https://node-red-vlxgg.eu-gb.mybluemix.net/mns'
+		r=requests.post(imgUrl, files=files)
+		print('Photo Status Code'+str(r.status_code))
 		image_file_descriptor.close()
+		delIdUrl = 'https://node-red-vlxgg.eu-gb.mybluemix.net/Id'
+		empId = {'Id':delId}
+		rId=requests.post(delIdUrl,json=empId)
+		print('ID status Code'+str(rId.status_code))
 		i+=1
 		print(i)
 		videoCaptureObject.release()
@@ -96,6 +103,4 @@ quitBtn.pack()
 sizedcanvas3= tk.Canvas(root, height=15)
 sizedcanvas3.pack()
 
-# path = selectPath()
-# runApp(path)
 root.mainloop()
