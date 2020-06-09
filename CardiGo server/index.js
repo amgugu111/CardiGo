@@ -1,7 +1,8 @@
-const app = require('express')()
 const http = require('http').createServer(app)
+const express = require('express');
+const app = express();
 const path = require('path');
-const router = app.Router();
+const router = express.Router();
 
  
 router.get('/',function(req,res){
