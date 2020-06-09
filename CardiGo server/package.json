@@ -1,11 +1,8 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "A server to get realtime BPM",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "start": "nodejs ./bin/www"
   },
   "author": "Ashish",
   "license": "ISC",
