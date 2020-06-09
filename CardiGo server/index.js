@@ -4,11 +4,15 @@ const path = require('path');
 const router = express.Router();
 const http = require('http').createServer(app)
 
- 
 router.get('/',function(req,res){
-    res.sendFile(path.join(__dirname+'/login.html'));
-    //__dirname : It will resolve to your project folder.
-  });
+    console.log("hello");
+    res.sendFile('login.html');
+})
+ 
+// router.get('/',function(req,res){
+//     res.sendFile(path.join(__dirname+'/login.html'));
+//     //__dirname : It will resolve to your project folder.
+//   });
 
 //POST login data
 router.post('/login', function(req, res) {
