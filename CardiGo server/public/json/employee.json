@@ -1,0 +1,40 @@
+[
+    {
+        "id": 1,
+        "employee_id": "DEL99887744",
+        "email": "sarthak.rout@deloitte.com",
+        "first_name":"Sarthak",
+        "last_name":"Rout",
+        "avatar":"https://avatars3.githubusercontent.com/u/35285088?s=460&u=246ccfb63b2214e505a17507c16a691fe38b9dfe&v=4",
+        "designation": "Trainee",
+        "pulse_data":80,
+        "hof_data":"happy",
+        "feedback_report":"happy"
+
+    },
+    {
+        "id": 2,
+        "employee_id": "DEL99887755",
+        "email": "maitri.swarup@deloitte.com",
+        "first_name":"Maitri Swarup",
+        "last_name":"Tripathy",
+        "avatar":"https://scontent-bom1-2.xx.fbcdn.net/v/t1.0-0/p640x640/56944958_1327880410694769_1253791487318032384_o.jpg?_nc_cat=108&_nc_sid=7aed08&_nc_ohc=BA4bP6S3QuQAX8pd2c9&_nc_ht=scontent-bom1-2.xx&_nc_tp=6&oh=83825ee2f1a4b77379b03bae39c0a2f5&oe=5EEA4B84",
+        "designation": "Trainee",
+        "pulse_data":80,
+        "hof_data":"happy",
+        "feedback_report":"happy"
+    },
+    {
+        "id": 3,
+        "employee_id": "DEL99887766",
+        "email": "ashish.mohapatra@deloitte.com",
+        "first_name":"Ashish",
+        "last_name":"Mohapatra",
+        "avatar":"https://avatars3.githubusercontent.com/u/36891939?s=460&u=a66d0db74870b5c29de4b44cb6c5e3a22d5b6e75&v=4",
+        "designation": "Trainee",
+        "pulse_data":80,
+        "hof_data":"happy",
+        "feedback_report":"happy"
+    }
+    
+]
