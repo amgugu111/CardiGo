@@ -17,6 +17,11 @@ router.post('/login', function(req, res) {
     
 });
 
+/* GET dashboard page. */
+router.get('/admin', function(req, res) {
+  res.render('dashboard');
+});
+
 //Socket Logic
 const socketio = require('socket.io')(http)
 var toneText =""
