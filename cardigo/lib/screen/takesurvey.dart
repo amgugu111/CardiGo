@@ -4,6 +4,8 @@ import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_socket_io/flutter_socket_io.dart';
+import 'package:flutter_socket_io/socket_io_manager.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:cardigo/utils/statecontainer.dart';
@@ -27,6 +29,21 @@ class _TakeSurveyState extends State<TakeSurvey> {
   GlobalKey<FormFieldState>();
 
   ValueChanged _onChanged = (val) => print(val);
+  SocketIO socketIO;
+
+
+  @override
+  void initState() {
+    //Creating the socket
+    socketIO = SocketIOManager().createSocketIO(
+        'https://cardigo.eu-gb.cf.appdomain.cloud','/'
+    );
+    //Call init before doing anything with socket
+    socketIO.init();
+    //Connect to the socket
+    socketIO.connect();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -662,11 +679,11 @@ class _TakeSurveyState extends State<TakeSurvey> {
                     onPressed: () {
                       if (_fbKey.currentState.saveAndValidate()) {
                         Map finalFeedback = _fbKey.currentState.value;
-                        print('Feedback is $finalFeedback');
                         String sentMsg = 'Your feedback has been sent';
                         showToast(sentMsg);
                         setState(() {
                           sendFeedback(finalFeedback);
+                          print('Feedback is $finalFeedback');
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context)
                               => Bottom()));
@@ -704,7 +721,16 @@ class _TakeSurveyState extends State<TakeSurvey> {
   sendFeedback (Map finalFeedback) {
     final userInherited = StateContainer.of(context);
     user = userInherited.user;
+    if(user!=null) {
+      finalFeedback["Id"] = user.employeeId;
+    }
+    else {
+      finalFeedback["Id"] = "No ID";
+    }
     userInherited.updateUserInfo(feedbackReport: finalFeedback);
+    if(finalFeedback!=null){
+      socketIO.sendMessage(
+          'send_feedback', json.encode({'feedbackSent': finalFeedback}));
+    }
   }
-
 }

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         SPLASH_SCREEN: (BuildContext context) => AnimatedSplashScreen(),
-        LOGIN_SCREEN: (BuildContext context) => Bottom(),
+        LOGIN_SCREEN: (BuildContext context) => loginPage(),
         BOTTOM_NAV: (BuildContext context) => Bottom(),
       },
     );

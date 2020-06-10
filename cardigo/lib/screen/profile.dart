@@ -57,7 +57,7 @@ class _UserProfileState extends State<UserProfile> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(user != null ? "DEL ID: ${user.firstName} ${user.lastName}"
+                  Text(user != null ? "${user.employeeId}"
                       : "No ID",
                     style: TextStyle(color: Colors.black54,fontSize: 16,
                         fontFamily: "Montserrat"
@@ -66,7 +66,7 @@ class _UserProfileState extends State<UserProfile> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(user != null ? "Email: ${user.email}"
+                  Text(user != null ? "${user.email}"
                       : "No Email",
                     style: TextStyle(color: Colors.black54,fontSize: 16,
                         fontFamily: "Montserrat"
