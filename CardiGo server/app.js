@@ -3,12 +3,11 @@ var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+const http = require('http').createServer(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -16,8 +15,8 @@ app.set('view engine', 'ejs');
 
 app.use(favicon());
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -30,6 +29,20 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+  //Socket Logic
+const socketio = require('socket.io')(http)
+var toneText =""
+
+socketio.on("connection", (userSocket) => {
+    userSocket.on("send_pulse", (data) => {
+        userSocket.broadcast.emit("receive_pulse", data)
+    })
+    userSocket.on("send_feedback", (data) => {
+        userSocket.broadcast.emit("receive_feedback", data)
+        console.log(data)
+    })
+})
 
 /// error handlers
 
@@ -57,3 +70,4 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+http.listen(process.env.PORT);
