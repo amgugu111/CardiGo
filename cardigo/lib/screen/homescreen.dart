@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert' show json, utf8;
 import 'package:cardigo/screen/alerts.dart';
 import 'package:cardigo/screen/configure.dart';
+import 'package:cardigo/screen/profile.dart';
 import 'package:cardigo/screen/takesurvey.dart';
-import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:cardigo/utils/globalappbar.dart';
 import 'package:cardigo/utils/statecontainer.dart';
 import 'package:cardigo/utils/user_model.dart';
@@ -46,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     connectToDevice();
     tracePulse = List<double>();
     feedbackSent = Map();
+    tracePulse = [0.0,72.0];
     //Creating the socket
     socketIO = SocketIOManager().createSocketIO(
       'https://cardigo.eu-gb.cf.appdomain.cloud','/'
@@ -191,6 +192,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ]
                       ),
                     ),
+                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => UserProfile())),
                   ),
                   _buildTile(
                     Padding(
@@ -219,15 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ]
                       ),
                     ),
-                    onTap: () {
-/*                      print('This is feedback to be sent ${user.feedbackReport}');
-                      print(user.feedbackReport);*/
-                      feedbackSent = user.feedbackReport;
-                      if(feedbackSent!=null){
-                        socketIO.sendMessage(
-                            'send_feedback', json.encode({'feedbackSent': feedbackSent}));
-                      }
-                    },
                   ),
                   _buildTile(
                     Padding(
@@ -358,7 +352,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ConnectionState.active) {
                                           var currentValue = _dataParser(snapshot.data);
                                           tracePulse.add(double.tryParse(currentValue) ?? 0);
-
                                           //sending tracepulse with socket
                                           if(tracePulse!=null){
                                             socketIO.sendMessage(
@@ -408,17 +401,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Padding(padding: EdgeInsets.only(bottom: 15.0)),
                           tracePulse!= null ?
-                          Flexible(
-                            fit: FlexFit.tight,
+                          Container(
+                            height: MediaQuery.of(context).size.height/4,
                             child: Sparkline(
                               data: tracePulse,
                               useCubicSmoothing: true,
                               lineWidth: 5.0,
-                              lineColor: Colors.blue,
+                              lineColor: Colors.green,
+                              enableGridLines: true,
+                              labelPrefix: "",
                               pointsMode: PointsMode.last,
                               pointSize: 5.0,
                               pointColor: Colors.red,
-                              fillMode: FillMode.below,
+//                              fillMode: FillMode.below,
                               fillGradient: new LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
@@ -472,12 +467,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               staggeredTiles: [
-                StaggeredTile.extent(2, 130.0),
-                StaggeredTile.extent(1, 172.0),
-                StaggeredTile.extent(1, 80.0),
-                StaggeredTile.extent(1, 80.0),
-                StaggeredTile.extent(2, 300.0),
-                StaggeredTile.extent(2, 110.0),
+                StaggeredTile.extent(2, MediaQuery.of(context).size.height/7.7),
+                StaggeredTile.extent(1, MediaQuery.of(context).size.height/5.5),
+                StaggeredTile.extent(1, MediaQuery.of(context).size.height/11.7),
+                StaggeredTile.extent(1, MediaQuery.of(context).size.height/11.7),
+                StaggeredTile.extent(2, MediaQuery.of(context).size.height/2.8),
+                StaggeredTile.extent(2, MediaQuery.of(context).size.height/9),
               ],
             )
         ),
