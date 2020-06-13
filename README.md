@@ -1,4 +1,4 @@
-![alt text](https://github.com/amgugu111/CardiGo/blob/master/Images/CardigoLogo.png?raw=true)
+![alt text](https://github.com/amgugu111/CardiGo/blob/master/cardigo/assets/cardigo_logo.png?raw=true)
 
 An employee health system.
 
