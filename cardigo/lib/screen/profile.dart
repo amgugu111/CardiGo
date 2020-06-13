@@ -32,8 +32,8 @@ class _UserProfileState extends State<UserProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    height: MediaQuery.of(context).size.width/3.5,
-                    width: MediaQuery.of(context).size.width/3.5,
+                    height: 80,
+                    width: 80,
                     decoration: BoxDecoration(
                       color: Color(0xfffafafa),
                       boxShadow: [BoxShadow(color: Color(0xffced4da),
@@ -43,32 +43,32 @@ class _UserProfileState extends State<UserProfile> {
                         NetworkImage("${user.avatar}")
                             : AssetImage("assets/avatar.png"),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(25.0)),
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Text(user != null ? user.firstName+" "+ user.lastName
                       : "Hello Boss",
-                  style: TextStyle(color: Colors.black87,fontSize: 20,
+                  style: TextStyle(color: Colors.black87,fontSize: 16,
                   fontFamily: "Montserrat",fontWeight: FontWeight.w500,
                   letterSpacing: 1.2),),
                   SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   Text(user != null ? "${user.employeeId}"
                       : "No ID",
-                    style: TextStyle(color: Colors.black54,fontSize: 16,
+                    style: TextStyle(color: Colors.black54,fontSize: 12,
                         fontFamily: "Montserrat"
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   Text(user != null ? "${user.email}"
                       : "No Email",
-                    style: TextStyle(color: Colors.black54,fontSize: 16,
+                    style: TextStyle(color: Colors.black54,fontSize: 12,
                         fontFamily: "Montserrat"
                     ),
                   ),

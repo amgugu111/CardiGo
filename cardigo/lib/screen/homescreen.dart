@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   _buildTile(
                     Padding(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -168,12 +168,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: <Widget>
                             [
                               Text(user != null ? 'Hi ${user.firstName}, ':'Hi User',
-                                  style: TextStyle(color: Color(0xff013220),
+                                  style: TextStyle(color: Colors.black87,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 34.0,fontFamily: "Montserrat")),
+                                      fontSize: 24.0,fontFamily: "Montserrat")),
                               Text(user != null ?'${user.designation}':'your designation',
                                   style: TextStyle(color: Colors.black45,
-                                      fontSize: 20,fontFamily: "Montserrat"))
+                                      fontSize: 16,fontFamily: "Montserrat"))
                             ],
                           ),
                           Material(
@@ -215,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text('Team', style: TextStyle(color: Colors.black,
-                                      fontWeight: FontWeight.w700, fontSize: 24.0)),
+                                      fontWeight: FontWeight.w700, fontSize: 20.0)),
                                   Text('Message', style: TextStyle(color: Colors.black45)),
                                 ]
                             ),
@@ -225,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   _buildTile(
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -234,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Color(0xffa64452),
                                 shape: CircleBorder(),
                                 child: Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(5.0),
                                   child: Icon(Icons.notifications, color: Colors.white, size: 30.0),
                                 )
                             ),
@@ -242,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text('Alerts', style: TextStyle(color: Colors.black,
-                                      fontWeight: FontWeight.w700, fontSize: 24.0)),
+                                      fontWeight: FontWeight.w700, fontSize: 20.0)),
                                   Text('All ', style: TextStyle(color: Colors.black45)),
                                   ]
                             ),
@@ -254,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   _buildTile(
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.orangeAccent,
                                 shape: CircleBorder(),
                                 child: Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(5.0),
                                   child: Icon(Icons.local_hospital, color: Colors.white, size: 30.0),
                                 )
                             ),
@@ -271,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text('Leaves', style: TextStyle(color: Colors.black,
-                                      fontWeight: FontWeight.w700, fontSize: 24.0)),
+                                      fontWeight: FontWeight.w700, fontSize: 20.0)),
                                   Text('Apply ', style: TextStyle(color: Colors.black45)),
                                 ]
                             ),
@@ -434,7 +434,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   _buildTile(
                     Padding(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -444,21 +444,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text('Give Report', style: TextStyle(color: Colors.redAccent,fontFamily: "Montserrat",
-                                fontSize: 18)),
-                                Text('Fill the feedback', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 24.0,
+                                fontSize: 15)),
+                                Text('Fill the feedback', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 20.0,
                                     fontFamily: "Montserrat"))
                               ],
                             ),
                             Material(
                                 color: Colors.red,
-                                borderRadius: BorderRadius.circular(24.0),
+                                shape: CircleBorder(),
                                 child: Center(
                                   child: Padding(
-                                    padding: EdgeInsets.all(16.0),
+                                    padding: EdgeInsets.all(10.0),
                                     child: Icon(Icons.feedback, color: Colors.white, size: 30.0),
                                   )
                                 )
-                            )
+                            ),
                           ]
                       ),
                     ),
@@ -467,12 +467,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               staggeredTiles: [
-                StaggeredTile.extent(2, MediaQuery.of(context).size.height/7.7),
-                StaggeredTile.extent(1, MediaQuery.of(context).size.height/5.5),
-                StaggeredTile.extent(1, MediaQuery.of(context).size.height/11.7),
-                StaggeredTile.extent(1, MediaQuery.of(context).size.height/11.7),
-                StaggeredTile.extent(2, MediaQuery.of(context).size.height/2.8),
-                StaggeredTile.extent(2, MediaQuery.of(context).size.height/9),
+                StaggeredTile.extent(2, 110),
+                StaggeredTile.extent(1, 160),
+                StaggeredTile.extent(1, 74),
+                StaggeredTile.extent(1, 74),
+                StaggeredTile.extent(2, 300),
+                StaggeredTile.extent(2, 120),
               ],
             )
         ),
