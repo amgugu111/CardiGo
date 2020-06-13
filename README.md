@@ -6,4 +6,9 @@ Detection of Stress with real-time Heart Rate, Tone Analyzing and Hand-over Face
 
 IBMid: ashish.mohapatra05@gmail.com
 Password: TechnoUtsav3@CardiGo
+
 ![alt text](https://github.com/amgugu111/CardiGo/blob/master/Images/CardigoFlow.jpg?raw=true)
+
+**App UI**
+
+![alt text](https://github.com/amgugu111/CardiGo/blob/master/Images/appUI.png?raw=true)
