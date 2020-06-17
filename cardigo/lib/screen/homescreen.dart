@@ -143,6 +143,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final userInherited =  StateContainer.of(context);
     user = userInherited.user;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     var appBar = new GlobalAppBar();
     return WillPopScope(
       onWillPop: _onWillPop,
@@ -151,13 +153,13 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: appBar,
         body: StaggeredGridView.count(
                 crossAxisCount: 2,
-                crossAxisSpacing: 12.0,
-                mainAxisSpacing: 12.0,
+                crossAxisSpacing: height/80,
+                mainAxisSpacing: height/80,
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 children: <Widget>[
                   _buildTile(
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(width/25),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,10 +172,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(user != null ? 'Hi ${user.firstName}, ':'Hi User',
                                   style: TextStyle(color: Colors.black87,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 24.0,fontFamily: "Montserrat")),
+                                      fontSize: height/40,fontFamily: "Montserrat",)),
                               Text(user != null ?'${user.designation}':'your designation',
                                   style: TextStyle(color: Colors.black45,
-                                      fontSize: 16,fontFamily: "Montserrat"))
+                                      fontSize: height/50,fontFamily: "Montserrat"))
                             ],
                           ),
                           Material(
@@ -181,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Center(
                               child: user != null ?
                               CircleAvatar(
-                                radius: 40.0,
+                                radius: height/18,
                                 backgroundImage:
                                 NetworkImage("${user.avatar}"),
                                 backgroundColor: Colors.transparent,
@@ -197,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   _buildTile(
                     Padding(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: EdgeInsets.all(width/20),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -208,15 +210,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Padding
                                   (
                                   padding: const EdgeInsets.all(12.0),
-                                  child: Icon(Icons.people, color: Colors.white, size: 25.0),
+                                  child: Icon(Icons.people, color: Colors.white, size: height/25),
                                 )
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text('Team', style: TextStyle(color: Colors.black,
-                                      fontWeight: FontWeight.w700, fontSize: 20.0)),
-                                  Text('Message', style: TextStyle(color: Colors.black45)),
+                                      fontWeight: FontWeight.w700, fontSize: height/45,
+                                    fontFamily: "Montserrat",)),
+                                  Text('Message', style: TextStyle(color: Colors.black45,
+                                    fontSize: height/55,fontFamily: "Montserrat",)),
                                 ]
                             ),
                           ]
@@ -234,16 +239,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Color(0xffa64452),
                                 shape: CircleBorder(),
                                 child: Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Icon(Icons.notifications, color: Colors.white, size: 30.0),
+                                  padding: EdgeInsets.all(height/80),
+                                  child: Icon(Icons.notifications, color: Colors.white, size: height/25),
                                 )
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text('Alerts', style: TextStyle(color: Colors.black,
-                                      fontWeight: FontWeight.w700, fontSize: 20.0)),
-                                  Text('All ', style: TextStyle(color: Colors.black45)),
+                                      fontWeight: FontWeight.w700, fontSize: height/45,
+                                    fontFamily: "Montserrat",)),
+                                  Text('All ', style: TextStyle(color: Colors.black45,
+                                      fontSize: height/55, fontFamily: "Montserrat",)),
                                   ]
                             ),
                           ]
@@ -263,16 +271,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.orangeAccent,
                                 shape: CircleBorder(),
                                 child: Padding(
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Icon(Icons.local_hospital, color: Colors.white, size: 30.0),
+                                  padding: EdgeInsets.all(height/80),
+                                  child: Icon(Icons.local_hospital, color: Colors.white, size: height/25),
                                 )
                             ),
                             Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text('Leaves', style: TextStyle(color: Colors.black,
-                                      fontWeight: FontWeight.w700, fontSize: 20.0)),
-                                  Text('Apply ', style: TextStyle(color: Colors.black45)),
+                                      fontWeight: FontWeight.w700, fontSize: height/45.0,
+                                    fontFamily: "Montserrat",)),
+                                  Text('Apply ', style: TextStyle(color: Colors.black45,
+                                      fontSize: height/55, fontFamily: "Montserrat",)),
                                 ]
                             ),
                           ]
@@ -290,15 +301,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children:<Widget>[
                             Text("Waiting for sensor...",
-                              style: TextStyle(fontSize: 24, color: Colors.black,
+                              style: TextStyle(fontSize: height/35, color: Colors.black,
                                   fontFamily: 'Montserrat'
                               ),
                             ),
                             Container(
-                                height: 40.0,
-                                width: 250,
+                                height: height/25,
+                                width: width/1.5,
                                 child: Material(
-                                    borderRadius: BorderRadius.circular(40.0),
+                                    borderRadius: BorderRadius.circular(height/70.0),
                                     shadowColor: Colors.lightGreenAccent,
                                     color: Color(0xFF86BC24),
                                     elevation: 7.0,
@@ -318,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'Montserrat',
-                                            fontSize: 16,
+                                            fontSize: height/50,
                                           ),
                                         ),
                                       ),
@@ -363,14 +374,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Row(
                                                   children: <Widget>[
                                                     Text('Pulse Rate ',
-                                                      style: TextStyle(fontSize: 16)),
-                                                    Text('❤️', style: TextStyle(color:Colors.red, fontSize: 16)),
+                                                      style: TextStyle(fontSize: height/45)),
+                                                    Text('❤️', style: TextStyle(color:Colors.red, fontSize: height/45)),
                                                   ]
                                               ),
                                               Text('$currentValue BPM',
                                                 style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 24
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: height/35
                                                 )
                                               )
                                             ]
@@ -423,7 +434,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           )
                               : Center(
                             child: Text("Loading...",
-                              style: TextStyle(fontSize: 24, color: Colors.black,
+                              style: TextStyle(fontSize: height/35, color: Colors.black,
                                   fontFamily: 'Montserrat'
                               ),
                             ),
@@ -444,8 +455,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text('Give Report', style: TextStyle(color: Colors.redAccent,fontFamily: "Montserrat",
-                                fontSize: 15)),
-                                Text('Fill the feedback', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: 20.0,
+                                fontSize: height/50)),
+                                Text('Fill the feedback', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700, fontSize: height/40.0,
                                     fontFamily: "Montserrat"))
                               ],
                             ),
@@ -454,8 +465,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 shape: CircleBorder(),
                                 child: Center(
                                   child: Padding(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Icon(Icons.feedback, color: Colors.white, size: 30.0),
+                                    padding: EdgeInsets.all(height/70.0),
+                                    child: Icon(Icons.feedback, color: Colors.white, size: height/25.0),
                                   )
                                 )
                             ),
@@ -467,12 +478,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               staggeredTiles: [
-                StaggeredTile.extent(2, 110),
-                StaggeredTile.extent(1, 160),
-                StaggeredTile.extent(1, 74),
-                StaggeredTile.extent(1, 74),
-                StaggeredTile.extent(2, 300),
-                StaggeredTile.extent(2, 120),
+                StaggeredTile.extent(2, height/6.5),
+                StaggeredTile.extent(1, height/4.3),
+                StaggeredTile.extent(1, height/9),
+                StaggeredTile.extent(1, height/9),
+                StaggeredTile.extent(2, height/2.5),
+                StaggeredTile.extent(2, height/7),
               ],
             )
         ),

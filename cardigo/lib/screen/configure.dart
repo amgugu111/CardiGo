@@ -39,6 +39,8 @@ class BluetoothOffScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     final appBar = GlobalAppBar();
     return Scaffold(
       appBar: appBar,
@@ -48,7 +50,7 @@ class BluetoothOffScreen extends StatelessWidget {
           children: <Widget>[
             Icon(
               Icons.bluetooth_disabled,
-              size: 200.0,
+              size: height/4,
               color: Color(0xFF86BC24),
             ),
             SizedBox(height: 10),
@@ -58,7 +60,7 @@ class BluetoothOffScreen extends StatelessWidget {
                   .primaryTextTheme
                   // ignore: deprecated_member_use
                   .subhead
-                  .copyWith(color: Colors.black, fontSize: 20,fontFamily: 'Montserrat',fontWeight: FontWeight.bold),
+                  .copyWith(color: Colors.black, fontSize: height/50,fontFamily: 'Montserrat',fontWeight: FontWeight.bold),
             ),
           ],
         ),

@@ -28,6 +28,8 @@ class _BottomState extends State<Bottom> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -43,7 +45,9 @@ class _BottomState extends State<Bottom> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            icon: Icon(Icons.dashboard),
+            icon: Icon(
+              Icons.dashboard,
+              size: height/40,),
           ),
           BottomNavigationBarItem(
             title: Text(
@@ -54,7 +58,8 @@ class _BottomState extends State<Bottom> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            icon: Icon(Icons.feedback),
+            icon: Icon(Icons.feedback,
+              size: height/40,),
           ),
           BottomNavigationBarItem(
             title: Text(
@@ -65,7 +70,8 @@ class _BottomState extends State<Bottom> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            icon: Icon(Icons.settings_bluetooth),
+            icon: Icon(Icons.settings_bluetooth,
+              size: height/40,),
           ),
           BottomNavigationBarItem(
             title: Text(
@@ -76,7 +82,8 @@ class _BottomState extends State<Bottom> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            icon: Icon(Icons.account_circle),
+            icon: Icon(Icons.account_circle,
+              size: height/40,),
           )
         ],
         onTap: (index){
@@ -86,7 +93,8 @@ class _BottomState extends State<Bottom> {
         },
         selectedItemColor: Color(0xFF86BC24),
         unselectedItemColor: Colors.grey,
-        selectedFontSize: 16,
+        selectedFontSize: height/55,
+        unselectedFontSize: height/60,
       ),
     );
   }

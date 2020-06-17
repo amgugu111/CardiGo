@@ -135,14 +135,16 @@ class _loginPageState extends State<loginPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color(0xfffafafa),
       resizeToAvoidBottomPadding: false,
       body: isLoading ?
       Center(child:
           Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            height: height,
+            width: width,
             child: Loader(),
           ),
         /*Container(
@@ -161,7 +163,7 @@ class _loginPageState extends State<loginPage> {
             height: 10,
           ),
           Container(
-            width: MediaQuery.of(context).size.width/2.1,
+            width: width/2.1,
             child: Image.asset("assets/hello_there.png")
           ),
           Container(
@@ -211,31 +213,38 @@ class _loginPageState extends State<loginPage> {
                     },
                   ),
                 ),
-                SizedBox(height: 40.0),
-                GestureDetector(
-                  onTap: ()  {
-                    setState(() {
-                      isLoading = true;
-                    });
-                    isLoggedIn();
-                  },
-                child: Container(
-                  height: 50.0,
-                  width: 420,
+                SizedBox(height: height/25),
+                Container(
+                  height: height/20,
+                  width: width/1.2,
                   child: Material(
-                    borderRadius: BorderRadius.circular(20.0),
+                    elevation: 6.0,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height/50)),
                     shadowColor: Colors.grey,
-                    color: Color(0xFF212121),
-                    elevation: 14.0,
-                      child: Center(
-                        child: Text(
-                          'LOGIN',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat'
+                    color: Color(0xff86BC24),
+                      child: Material(
+                        type: MaterialType.transparency,
+                        elevation: 6,
+                        color: Colors.transparent,
+                        shadowColor: Colors.grey,
+                        child: InkWell(
+                          splashColor: Colors.white30,
+                          onTap: ()  {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            isLoggedIn();
+                          },
+                          child: Center(
+                            child: Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat'
+                              ),
+                            ),
                           ),
-                        ),
                       ),
                     ),
                   ),
