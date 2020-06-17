@@ -1,5 +1,6 @@
 import 'package:cardigo/screen/homescreen.dart';
 import 'package:cardigo/utils/bottom_nav.dart';
+import 'package:cardigo/utils/loader.dart';
 import 'package:cardigo/utils/statecontainer.dart';
 import 'package:cardigo/utils/user_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,21 +17,7 @@ class loginPage extends StatefulWidget {
 }
 
 // ignore: missing_return
-Future<UserModel> currentUser(String eId, String password) async{
-  final String dbUrl = "https://536b9159-b453-404d-b7d5-a9513293dc75-bluemix.cloudant.com/employee-details-cardigo/"+eId;
-  print(dbUrl);
-  final response = await http.get(dbUrl);
-  var code = response.statusCode;
-  print(code);
-  if(response.statusCode == 200){
-    final String responseString = response.body;
-    return userModelFromJson(responseString);
-  }
-  else{
-    String wrongMsg = "Invalid Employee ID";
-    showToast(wrongMsg);
-  }
-}
+
 
 void showToast(String msg) {
   Fluttertoast.showToast(msg: msg,
@@ -48,6 +35,33 @@ class _loginPageState extends State<loginPage> {
   UserModel _user;
   bool isLoading = false;
 
+  // ignore: missing_return
+  Future<UserModel> currentUser(String eId, String password) async{
+    final String dbUrl = "https://536b9159-b453-404d-b7d5-a9513293dc75-bluemix.cloudant.com/employee-details-cardigo/"+eId;
+    print(dbUrl);
+    final response = await http.get(dbUrl);
+    var code = response.statusCode;
+    print(code);
+    if(response.statusCode == 200){
+      final String responseString = response.body;
+      return userModelFromJson(responseString);
+    }
+    else if(response.statusCode == 404) {
+      final String responseString = response.body;
+      print(responseString);
+      String wrongMsg = "No such Employee ID";
+      showToast(wrongMsg);
+      setState(() {
+        isLoading = false;
+      });
+      return userModelFromJson(responseString);
+    }
+    else{
+      String wrongMsg = "Invalid Employee ID";
+      showToast(wrongMsg);
+    }
+  }
+
   isLoggedIn() async{
     final String eId = eIdController.text;
     final String password = passwordController.text;
@@ -56,38 +70,38 @@ class _loginPageState extends State<loginPage> {
     print(isLoading);
     setState(() {
       _user = user;
-      if(_user.password == password.trim()) {
-        setState(() {
-          userInherited.updateUserInfo(id:_user.id, employeeId:_user.employeeId,
+      print(_user.error);
+        if(_user.password == password.trim()) {
+          setState(() {
+            userInherited.updateUserInfo(id:_user.id, employeeId:_user.employeeId,
               password: _user.password, email: _user.email, designation: _user.designation,
               firstName:_user.firstName, lastName: _user.lastName, avatar: _user.avatar,
               pulseData: _user.pulseData, hofData:_user.hofData,
               blueStatus: _user.blueStatus,);
-          isLoading = false;
-          print(isLoading);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context)
-              => Bottom()));
-        });
-      }
-      else {
-        setState(() {
-          isLoading = false;
-        });
-        String wrongMsg = "Wrong ID/Password";
-        showToast(wrongMsg);
-      }
+            isLoading = false;
+            print(isLoading);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context)
+                => Bottom()));
+          });
+        }
+        else {
+            setState(() {
+              isLoading = false;
+            });
+            String wrongMsg = "Wrong ID/Password";
+            showToast(wrongMsg);
+          }
     });
   }
 
   String validatePassword(String value) {
-    if (!(value.length > 5) && value.isNotEmpty) {
-      return "ID should contains more then 5 character";
-    }
-    else if(value.isEmpty){
+    if(value.isEmpty){
       return "ID can't be empty";
     }
-    return null;
+    else {
+      return null;
+    }
   }
 
   customDialog(){
@@ -126,15 +140,18 @@ class _loginPageState extends State<loginPage> {
       resizeToAvoidBottomPadding: false,
       body: isLoading ?
       Center(child:
-        Container(
-/*          width: double.infinity,
-          height: double.infinity,*/
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Loader(),
+          ),
+        /*Container(
           child: CircularProgressIndicator(
             valueColor: new AlwaysStoppedAnimation<Color>(
                 Color(0xFF86BC24)
             ),
           ),
-        ),
+        ),*/
       )
       : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +212,14 @@ class _loginPageState extends State<loginPage> {
                   ),
                 ),
                 SizedBox(height: 40.0),
-                Container(
+                GestureDetector(
+                  onTap: ()  {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    isLoggedIn();
+                  },
+                child: Container(
                   height: 50.0,
                   width: 420,
                   child: Material(
@@ -203,13 +227,6 @@ class _loginPageState extends State<loginPage> {
                     shadowColor: Colors.grey,
                     color: Color(0xFF212121),
                     elevation: 14.0,
-                    child: GestureDetector(
-                      onTap: ()  {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        isLoggedIn();
-                      },
                       child: Center(
                         child: Text(
                           'LOGIN',

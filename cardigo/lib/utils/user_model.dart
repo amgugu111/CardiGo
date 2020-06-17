@@ -22,6 +22,8 @@ class UserModel {
   bool blueStatus;
   Map feedbackReport;
   String error;
+  String response;
+  String reason;
 
   UserModel({
     this.id,
@@ -37,6 +39,8 @@ class UserModel {
     this.blueStatus,
     this.feedbackReport,
     this.error,
+    this.reason,
+    this.response,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -52,6 +56,7 @@ class UserModel {
     hofData: json["hof_data"],
     blueStatus: json["blue_status"],
     error: json["error"],
+    reason: json["reason"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -67,5 +72,6 @@ class UserModel {
     "hof_data": hofData,
     "blue_status": blueStatus,
     "error": error,
+    "reason": reason,
   };
 }
