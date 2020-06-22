@@ -1,4 +1,3 @@
-import 'package:cardigo/screen/homescreen.dart';
 import 'package:cardigo/utils/bottom_nav.dart';
 import 'package:cardigo/utils/loader.dart';
 import 'package:cardigo/utils/statecontainer.dart';
@@ -29,9 +28,11 @@ void showToast(String msg) {
 
 // ignore: camel_case_types
 class _loginPageState extends State<loginPage> {
-
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final TextEditingController eIdController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+
+  bool _obscureText = true;
   UserModel _user;
   bool isLoading = false;
 
@@ -95,12 +96,17 @@ class _loginPageState extends State<loginPage> {
     });
   }
 
-  String validatePassword(String value) {
-    if(value.isEmpty){
-      return "ID can't be empty";
+    void validateAndSave() {
+    final FormState form = _formkey.currentState;
+    if(form.validate()) {
+      print("Validated");
+      isLoggedIn();
     }
     else {
-      return null;
+      setState(() {
+        isLoading = false;
+      });
+      print("Not valid");
     }
   }
 
@@ -147,13 +153,6 @@ class _loginPageState extends State<loginPage> {
             width: width,
             child: Loader(),
           ),
-        /*Container(
-          child: CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation<Color>(
-                Color(0xFF86BC24)
-            ),
-          ),
-        ),*/
       )
       : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,89 +167,113 @@ class _loginPageState extends State<loginPage> {
           ),
           Container(
             padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  controller: eIdController,
-                  decoration: InputDecoration(
-                      errorText: validatePassword(eIdController.text),
-                      labelText: 'Employee ID',
-                      labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.green))),
-                ),
-                SizedBox(height: 20.0),
-                TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green))),
-                  obscureText: true,
-                ),
-                SizedBox(height: 5.0),
-                Container(
-                  alignment: Alignment(1.0, 0.0),
-                  padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                  child: InkWell(
-                    child: Text(
-                      'Forgot Password',
-                      style: TextStyle(
-                        color: Color(0xFF86BC24),
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
-                        decoration: TextDecoration.underline),
-                    ),
-                    onTap: () {
-                      customDialog();
+            child: Form(
+              key: _formkey,
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    controller: eIdController,
+                    validator: (value) {
+                      if(value.isEmpty) {
+                        return "Employee ID can't be empty";
+                      }
+                      return null;
                     },
+                    decoration: InputDecoration(
+                        labelText: 'Employee ID',
+                        labelStyle: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green))),
                   ),
-                ),
-                SizedBox(height: height/25),
-                Container(
-                  height: height/20,
-                  width: width/1.2,
-                  child: Material(
-                    elevation: 6.0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height/50)),
-                    shadowColor: Colors.grey,
-                    color: Color(0xff86BC24),
-                      child: Material(
-                        type: MaterialType.transparency,
-                        elevation: 6,
-                        color: Colors.transparent,
-                        shadowColor: Colors.grey,
-                        child: InkWell(
-                          splashColor: Colors.white30,
-                          onTap: ()  {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            isLoggedIn();
-                          },
-                          child: Center(
-                            child: Text(
-                              'LOGIN',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat'
+                  SizedBox(height: 20.0),
+                  TextFormField(
+                    controller: passwordController,
+                    obscureText: _obscureText,
+                    validator: (value) {
+                      if(value.isEmpty) {
+                        return "Password can't be empty";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(icon: Icon(
+                        _obscureText ?
+                        Icons.visibility : Icons.visibility_off),
+                         onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        color: Colors.grey,
+                      ),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.green))),
+                  ),
+                  SizedBox(height: 5.0),
+                  Container(
+                    alignment: Alignment(1.0, 0.0),
+                    padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                    child: InkWell(
+                      child: Text(
+                        'Forgot Password',
+                        style: TextStyle(
+                          color: Color(0xFF86BC24),
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                          decoration: TextDecoration.underline),
+                      ),
+                      onTap: () {
+                        customDialog();
+                      },
+                    ),
+                  ),
+                  SizedBox(height: height/25),
+                  Container(
+                    height: height/20,
+                    width: width/1.2,
+                    child: Material(
+                      elevation: 6.0,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(height/50)),
+                      shadowColor: Colors.grey,
+                      color: Color(0xff86BC24),
+                        child: Material(
+                          type: MaterialType.transparency,
+                          elevation: 6,
+                          color: Colors.transparent,
+                          shadowColor: Colors.grey,
+                          child: InkWell(
+                            splashColor: Colors.white30,
+                            onTap: ()  {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              validateAndSave();
+                            },
+                            child: Center(
+                              child: Text(
+                                'LOGIN',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat'
+                                ),
                               ),
                             ),
-                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20.0),
-              ],
+                  SizedBox(height: 20.0),
+                ],
+              ),
             )
           ),
           SizedBox(height: 15.0),
