@@ -56,19 +56,19 @@ class _TakeSurveyState extends State<TakeSurvey> {
           children: <Widget>[
             FormBuilder( key: _fbKey,
 
-//              autovalidate: true,
-//              initialValue: {
-//                'rating_one': 3,
-//                'rating_two': 3,
-//                'rating_three': 3,
-//                'rating_four': 3,
-//                'rating_five': 3,
-//                'rating_six': 3,
-//                'rating_seven': 3,
-//                'rating_eight': 3,
-//                'rating_nine': 3,
-//                'rating_ten': 3,
-//              },
+             autovalidate: true,
+             initialValue: {
+               'rating_1': 3,
+               'rating_2': 3,
+               'rating_3': 3,
+               'rating_4': 3,
+               'rating_5': 3,
+               'rating_6': 3,
+               'rating_7': 3,
+               'rating_8': 3,
+               'rating_9': 3,
+               'rating_10': 3,
+             },
 
               readOnly: false,
               child: Column(
@@ -163,26 +163,6 @@ class _TakeSurveyState extends State<TakeSurvey> {
                         );
                       },
                     ),
-                  ),
-                  SizedBox(height: 15),
-                  FormBuilderTextField(
-                    attribute: "question_3",
-                    decoration: InputDecoration(
-                      labelText:
-                      "What is the most stressful aspect of your job?",
-                      labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff333333), fontSize: 16),
-                    ),
-                    onChanged: _onChanged,
-                    validators: [
-                      FormBuilderValidators.required(),
-                      // FormBuilderValidators.max(70),
-                      FormBuilderValidators.minLength(2, allowEmpty: true),
-                    ],
-                    keyboardType: TextInputType.text,
-
                   ),
                   SizedBox(height: 15),
                   FormBuilderChoiceChip(
@@ -623,36 +603,15 @@ class _TakeSurveyState extends State<TakeSurvey> {
                     ),
                   ),
                   SizedBox(height: 15),
-                  FormBuilderTextField(
-                    attribute: "question_9",
-                    decoration: InputDecoration(
-                      labelText:
-                      "What are the positive aspects of your job?",
-                      labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff333333), fontSize: 16),
-                    ),
-                    onChanged: _onChanged,
-                    validators: [
-                      FormBuilderValidators.required(),
-                      // FormBuilderValidators.max(70),
-                      FormBuilderValidators.minLength(2, allowEmpty: true),
-                    ],
-                    keyboardType: TextInputType.text,
-                  ),
-                  SizedBox(height: 15),
-                  FormBuilderTextField(
-                    attribute: "question_10",
-                    decoration: InputDecoration(
-                      labelText:
-                      "What should Deloitte"
+                  Text("What is the most stressful aspect of your job?" 
+                      "What are the positive aspects of your job? What should Deloitte"
                           " do to help you cope with work stress?",
-                      labelStyle: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff333333), fontSize: 16),
-                    ),
+                    style:TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff333333), fontSize: 20),),
+                  FormBuilderTextField(
+                    attribute: "question_3",
                     onChanged: _onChanged,
                     validators: [
                       FormBuilderValidators.required(),

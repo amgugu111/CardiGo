@@ -46,14 +46,14 @@ class _LoaderState extends State<Loader>
     animation_radius_in = Tween(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(
         parent: controller,
-        curve: Interval(0.75, 1.0, curve: Curves.elasticIn),
+        curve: Interval(0.25, 1.0, curve: Curves.elasticIn),
       ),
     );
 
     animation_radius_out = Tween(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
-        curve: Interval(0.0, 0.25, curve: Curves.elasticOut),
+        curve: Interval(0.0, 0.75, curve: Curves.elasticOut),
       ),
     );
 
@@ -93,13 +93,13 @@ class _LoaderState extends State<Loader>
                     offset: Offset(0.0, 0.0),
                     child: Dot(
                       radius: radius,
-                      color: Colors.black12,
+                      color: Colors.black,
                     ),
                   ),
                   new Transform.translate(
                     child: Dot(
                       radius: dotRadius,
-                      color: Colors.amber,
+                      color: Color(0xFF86BC24),
                     ),
                     offset: Offset(
                       radius * cos(0.0),
@@ -109,7 +109,7 @@ class _LoaderState extends State<Loader>
                   new Transform.translate(
                     child: Dot(
                       radius: dotRadius,
-                      color: Colors.deepOrangeAccent,
+                      color: Color(0xFF86BC24),
                     ),
                     offset: Offset(
                       radius * cos(0.0 + 1 * pi / 4),
@@ -119,7 +119,7 @@ class _LoaderState extends State<Loader>
                   new Transform.translate(
                     child: Dot(
                       radius: dotRadius,
-                      color: Colors.pinkAccent,
+                      color: Color(0xFF86BC24),
                     ),
                     offset: Offset(
                       radius * cos(0.0 + 2 * pi / 4),
@@ -129,7 +129,7 @@ class _LoaderState extends State<Loader>
                   new Transform.translate(
                     child: Dot(
                       radius: dotRadius,
-                      color: Colors.purple,
+                      color: Color(0xFF86BC24),
                     ),
                     offset: Offset(
                       radius * cos(0.0 + 3 * pi / 4),
@@ -139,7 +139,7 @@ class _LoaderState extends State<Loader>
                   new Transform.translate(
                     child: Dot(
                       radius: dotRadius,
-                      color: Colors.yellow,
+                      color: Color(0xFF86BC24),
                     ),
                     offset: Offset(
                       radius * cos(0.0 + 4 * pi / 4),
@@ -149,7 +149,7 @@ class _LoaderState extends State<Loader>
                   new Transform.translate(
                     child: Dot(
                       radius: dotRadius,
-                      color: Colors.lightGreen,
+                      color: Color(0xFF86BC24),
                     ),
                     offset: Offset(
                       radius * cos(0.0 + 5 * pi / 4),
@@ -159,7 +159,7 @@ class _LoaderState extends State<Loader>
                   new Transform.translate(
                     child: Dot(
                       radius: dotRadius,
-                      color: Colors.orangeAccent,
+                      color: Color(0xFF86BC24),
                     ),
                     offset: Offset(
                       radius * cos(0.0 + 6 * pi / 4),
@@ -169,7 +169,7 @@ class _LoaderState extends State<Loader>
                   new Transform.translate(
                     child: Dot(
                       radius: dotRadius,
-                      color: Colors.blueAccent,
+                      color: Color(0xFF86BC24),
                     ),
                     offset: Offset(
                       radius * cos(0.0 + 7 * pi / 4),

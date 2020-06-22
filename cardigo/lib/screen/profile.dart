@@ -15,9 +15,11 @@ class _UserProfileState extends State<UserProfile> {
   UserModel user;
   @override
   Widget build(BuildContext context) {
-  final userInherited =  StateContainer.of(context);
-  final appBar = new GlobalAppBar();
-  user = userInherited.user;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    final userInherited =  StateContainer.of(context);
+    final appBar = new GlobalAppBar();
+    user = userInherited.user;
     return Scaffold(
         backgroundColor: Color(0xfffafafa),
       appBar: appBar,
@@ -32,8 +34,8 @@ class _UserProfileState extends State<UserProfile> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    height: MediaQuery.of(context).size.width/3.5,
-                    width: MediaQuery.of(context).size.width/3.5,
+                    height: height/8,
+                    width: height/8,
                     decoration: BoxDecoration(
                       color: Color(0xfffafafa),
                       boxShadow: [BoxShadow(color: Color(0xffced4da),
@@ -43,32 +45,32 @@ class _UserProfileState extends State<UserProfile> {
                         NetworkImage("${user.avatar}")
                             : AssetImage("assets/avatar.png"),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Text(user != null ? user.firstName+" "+ user.lastName
                       : "Hello Boss",
-                  style: TextStyle(color: Colors.black87,fontSize: 20,
+                  style: TextStyle(color: Colors.black87,fontSize: height/45,
                   fontFamily: "Montserrat",fontWeight: FontWeight.w500,
                   letterSpacing: 1.2),),
                   SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   Text(user != null ? "${user.employeeId}"
                       : "No ID",
-                    style: TextStyle(color: Colors.black54,fontSize: 16,
+                    style: TextStyle(color: Colors.black54,fontSize: height/55,
                         fontFamily: "Montserrat"
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   Text(user != null ? "${user.email}"
                       : "No Email",
-                    style: TextStyle(color: Colors.black54,fontSize: 16,
+                    style: TextStyle(color: Colors.black54,fontSize: height/60,
                         fontFamily: "Montserrat"
                     ),
                   ),
@@ -77,7 +79,7 @@ class _UserProfileState extends State<UserProfile> {
             ),
           ),
             Container(
-              height: MediaQuery.of(context).size.height/2,
+              height: MediaQuery.of(context).size.height/2.2,
               decoration: BoxDecoration(
                 color: Color(0xff343a40),
                   /*boxShadow: [BoxShadow(color: Color(0xffadb5bd),
@@ -109,16 +111,16 @@ class _UserProfileState extends State<UserProfile> {
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Center(
                                     child: Padding(
-                                      padding: EdgeInsets.all(12.0),
+                                      padding: EdgeInsets.all(height/90),
                                       child: Image.asset("assets/icons/deadline.png"),
                                     )
                                 )
                             ),
                             Text('Deadlines', style: TextStyle(color: Color(0xffe57373),
-                                fontFamily: "Montserrat", fontSize: 18,fontWeight: FontWeight.w700)),
+                                fontFamily: "Montserrat", fontSize: height/50,fontWeight: FontWeight.w700)),
                             Container(
-                              height: 30,
-                              width: 30,
+                              height: height/30,
+                              width: height/30,
                               decoration: new BoxDecoration(
                                   boxShadow: [BoxShadow(color: Colors.grey,
                                       blurRadius: 5)],
@@ -127,7 +129,8 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                               child: Center(
                                 child: Icon(Icons.arrow_forward_ios,
-                                  color: Colors.white,),
+                                  color: Colors.white,
+                                size: height/45,),
                               ),
                             ),
                           ]
@@ -149,16 +152,16 @@ class _UserProfileState extends State<UserProfile> {
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Center(
                                     child: Padding(
-                                      padding: EdgeInsets.all(12.0),
+                                      padding: EdgeInsets.all(height/90),
                                       child: Image.asset("assets/icons/message.png"),
                                     )
                                 )
                             ),
                             Text('Messages', style: TextStyle(color: Color(0xffff8f00),
-                                fontFamily: "Montserrat", fontSize: 18, fontWeight: FontWeight.w700)),
+                                fontFamily: "Montserrat", fontSize: height/50, fontWeight: FontWeight.w700)),
                             Container(
-                              height: 30,
-                              width: 30,
+                              height: height/30,
+                              width: height/30,
                               decoration: new BoxDecoration(
                                 boxShadow: [BoxShadow(color: Colors.grey,
                                       blurRadius: 5)],
@@ -167,7 +170,8 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                               child: Center(
                                 child: Icon(Icons.arrow_forward_ios,
-                                  color: Colors.white,),
+                                  color: Colors.white,
+                                    size: height/45),
                               ),
                             ),
                           ]
@@ -189,16 +193,16 @@ class _UserProfileState extends State<UserProfile> {
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Center(
                                     child: Padding(
-                                      padding: EdgeInsets.all(12.0),
+                                      padding: EdgeInsets.all(height/90),
                                       child: Image.asset("assets/icons/payslip.png"),
                                     )
                                 )
                             ),
                             Text('Pay Slips', style: TextStyle(color: Color(0xff1565c0),
-                                fontFamily: "Montserrat", fontSize: 18,fontWeight: FontWeight.w700)),
+                                fontFamily: "Montserrat", fontSize: height/50,fontWeight: FontWeight.w700)),
                             Container(
-                              height: 30,
-                              width: 30,
+                              height: height/30,
+                              width: height/30,
                               decoration: new BoxDecoration(
                                   boxShadow: [BoxShadow(color: Colors.grey,
                                       blurRadius: 5)],
@@ -207,7 +211,8 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                               child: Center(
                                 child: Icon(Icons.arrow_forward_ios,
-                                  color: Colors.white,),
+                                  color: Colors.white,
+                                    size: height/45),
                               ),
                             ),
                           ]
@@ -229,16 +234,16 @@ class _UserProfileState extends State<UserProfile> {
                                 borderRadius: BorderRadius.circular(16.0),
                                 child: Center(
                                     child: Padding(
-                                      padding: EdgeInsets.all(12.0),
+                                      padding: EdgeInsets.all(height/90),
                                       child: Image.asset("assets/icons/refund.png"),
                                     )
                                 )
                             ),
                             Text('Reimbursements', style: TextStyle(color: Color(0xff009688),
-                                fontFamily: "Montserrat", fontSize: 18, fontWeight: FontWeight.w700)),
+                                fontFamily: "Montserrat", fontSize: height/50, fontWeight: FontWeight.w700)),
                             Container(
-                              height: 30,
-                              width: 30,
+                              height: height/30,
+                              width: height/30,
                               decoration: new BoxDecoration(
                                   boxShadow: [BoxShadow(color: Colors.grey,
                                       blurRadius: 5)],
@@ -247,7 +252,8 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                               child: Center(
                                 child: Icon(Icons.arrow_forward_ios,
-                                  color: Colors.white,),
+                                  color: Colors.white,
+                                    size: height/45),
                               ),
                             ),
                           ]
@@ -256,10 +262,10 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                 ],
                   staggeredTiles: [
-                    StaggeredTile.extent(2, MediaQuery.of(context).size.width/7),
-                    StaggeredTile.extent(2, MediaQuery.of(context).size.width/7),
-                    StaggeredTile.extent(2, MediaQuery.of(context).size.width/7),
-                    StaggeredTile.extent(2, MediaQuery.of(context).size.width/7),]
+                    StaggeredTile.extent(2, MediaQuery.of(context).size.width/7.7),
+                    StaggeredTile.extent(2, MediaQuery.of(context).size.width/7.7),
+                    StaggeredTile.extent(2, MediaQuery.of(context).size.width/7.7),
+                    StaggeredTile.extent(2, MediaQuery.of(context).size.width/7.7),]
               ),//
             ),
         ]
