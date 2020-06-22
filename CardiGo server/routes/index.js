@@ -21,4 +21,10 @@ router.get('/admin', function(req, res) {
   res.render('dashboard', { title: 'Admin dashboard' });
 });
 
+/* GET  page. */
+router.get('/dashboard/:str', function(req, res) {
+  console.log(req.params.str);
+  
+});
+
 module.exports = router;
