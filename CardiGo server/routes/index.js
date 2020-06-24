@@ -9,7 +9,7 @@ router.get('/', function(req, res) {
 //POST login data
 router.post('/login', function(req, res) {
   if(req.body.username === "admin@deloitte.com" && req.body.password === "admin"){
-    res.redirect('https://deloitte.now.sh/');
+    res.render('dashboard', { title: 'Admin dashboard' });
   } else {
     res.redirect('/');
   }
@@ -17,13 +17,13 @@ router.post('/login', function(req, res) {
 });
 
 /* GET dashboard page. */
-router.get('/admin', function(req, res) {
-  res.render('dashboard', { title: 'Admin dashboard' });
-});
+// router.get('/admin', function(req, res) {
+//   res.render('dashboard', { title: 'Admin dashboard' });
+// });
 
 /* GET  page. */
 router.get('/dashboard/:str', function(req, res) {
-  console.log(req.params.str);
+  res.send(req.params.str);
   
 });
 
