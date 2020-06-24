@@ -48,6 +48,7 @@ const toneAnalyzer = new ToneAnalyzerV3({
             method: 'GET'
           }, function(err, res, body) {
             console.log("ajax success");
+            res.render(str);
           });
         })
         .catch(err => {
