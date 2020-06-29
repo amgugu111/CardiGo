@@ -10,6 +10,7 @@ from io import BytesIO
 import base64
 import json
 
+#SelectPath method to browse and select path to store live image 
 def selectPath():
 	dir_name = filedialog.askdirectory(title='Select Path')
 	directry='live'
@@ -22,12 +23,13 @@ def selectPath():
 	    print('Dir already exists'+path)
 	    return path
 
+#runApp method which captures frames and send it to NodeRed
 def runApp():
 	path = selectPath()
 	delId = delIdText.get().strip()
 	print(delId)
 	i=0
-	for i in range (6):
+	for i in range (960):
 		videoCaptureObject = cv2.VideoCapture(0)
 		ret,frame = videoCaptureObject.read()
 		final_path = os.path.join(path,"picture.jpeg")
@@ -101,6 +103,4 @@ quitBtn.pack()
 sizedcanvas3= tk.Canvas(root, height=15)
 sizedcanvas3.pack()
 
-# path = selectPath()
-# runApp(path)
 root.mainloop()
