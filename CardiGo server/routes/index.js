@@ -22,20 +22,22 @@ router.get('/science', function(req, res) {
 
 /* GET dashboard page. */
 router.get('/dashboard', function(req, res) {
-  mydb.get('score1', function(err, data) {
-    if (err) console.log(err);
-    else{
-      console.log(typeof(data))
-    // console.log(data.result);
-    var hof = JSON.parse(data.result);
-    // console.log(hof.images[0].classifiers[0].classes[0]);
-    var hofdata = {
-      employeeID: hof.Em_Id,
-      class: hof.images[0].classifiers[0].classes[0].class,
-      score: hof.images[0].classifiers[0].classes[0].score
-    }
-    console.log(hofdata);
-    console.log(hofdata.employeeID);
+  mydb.get('_all_docs',{ include_docs: true }, function(err, data) {
+    var hofdata = [];
+    var hof;
+  if (err) console.log(err);
+      else{
+        for(let i = 0; i< data.total_rows;i++){
+          hof = JSON.parse(data.rows[i].doc.result);
+          console.log(hof);
+          hofdata.push ({
+            employeeID: hof.Em_Id,
+            class: hof.images[0].classifiers[0].classes[0].class,
+            score: hof.images[0].classifiers[0].classes[0].score
+          });
+        }
+        // console.log(hofdata);
+
     feedbackSchema.find({},(err, data) => {
       if (err) console.log(err);
       else{
@@ -44,8 +46,9 @@ router.get('/dashboard', function(req, res) {
 
 });
     }
-    
-}); 
+      
+  }); 
+ 
 });
 
 //POST login data
@@ -68,7 +71,6 @@ router.post('/login', function(req, res) {
 //   res.send(req.params.str);
   
 // });
-
 
 
 module.exports = router;
