@@ -40,15 +40,14 @@ const toneAnalyzer = new ToneAnalyzerV3({
           console.log(toneAnalysis.result.document_tone.tones);
           toneFeedback = toneAnalysis.result.document_tone.tones;
           for(i = 0; i<toneFeedback.length;i++){
-            str+=toneFeedback[i].score+"%"+toneFeedback[i].tone_id+"%";
+            str+=toneFeedback[i].score+"-"+toneFeedback[i].tone_id+"-";
           }
           console.log(str);
           request({
-            url: 'http://cardigo.eu-gb.cf.appdomain.cloud/dashboard/'+str,
+            url: 'http://localhost:3000/dashboard/'+str,
             method: 'GET'
           }, function(err, res, body) {
             console.log("ajax success");
-            res.render(str);
           });
         })
         .catch(err => {

@@ -26,21 +26,21 @@
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><a href="./index.html" class="simple-text logo-normal">
+      <div class="logo"><a href="./dashboard" class="simple-text logo-normal">
         CardiGo <span style="color: #41c354;">.</span>
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item active  ">
-            <a class="nav-link" href="./index.html">
+            <a class="nav-link" href="./dashboard">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./tables.html">
+            <a class="nav-link" href="./science">
               <i class="material-icons">content_paste</i>
-              <p>Table List</p>
+              <p>Science</p>
             </a>
           </li>
         </ul>
@@ -104,7 +104,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
+                  <a class="dropdown-item" href="/">Log out</a>
                 </div>
               </li>
             </ul>
@@ -258,7 +258,7 @@
               </div>
             </div>
             <div class="modal" id="apimodal" tabindex="-1" role="dialog">
-              <div class="modal-dialog">
+              <div class="modal-dialog modal-lg">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title">Modal title</h5>
@@ -277,6 +277,31 @@
                           </div>
                           <div class="col-md-6">
                             <canvas id="myChart" width="300" height="300"></canvas>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6" id="feedback">
+                            <canvas id="feedbackChart" width="300" height="300"></canvas>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="circle-wrap">
+                              <div class="circle">
+                                
+                                <div class="mask full">
+                                  <div class="fill"></div>
+                                </div>
+                               
+                                <div class="mask half">
+                                  <div class="fill"></div>
+                                </div>
+                                
+                                <div class="inside-circle">
+                                  <%= hofdata.class %>
+                                  <%= hofdata.score %>
+
+                                </div>
+                                
+                              </div>
                           </div>
                         </div>
                       </div>
@@ -523,19 +548,44 @@
     //modal call and adding modal data
     function viewRow(id){
           content = '';
+          var label = [];
+          var score = [];
+          var flag = 0;
           $.getJSON("json/employee.json", function(result){
-            for (let i = 0; i < result.length ; i++) {
+            for (let i = 0; i < result.length ; i++) { 
             if(id == result[i].id){
               $('.modal-title').html(result[i].employee_id);
               content+='<img src="'+result[i].avatar+'" width="100px" height="100px" style="border-radius:50%;">';
               content+='<small class="form-text text-muted">'+result[i].email+'</small>';
               content+='<p>'+result[i].first_name+'</p>';
               $('#apimodal').modal('show');
+              //doughnut chart
+            <% for(var j=feedback.length-1; j>=0; j--){ %>
+            if(result[i].employee_id == "<%= feedback[j].id %>" && flag == 0 ){
+              console.log(result[i].employee_id)
+              console.log("<%= feedback[j].id %>")
+              flag = 1;
+              <% for(var k=0;k<feedback[j].score.length;k++){ %>
+                label.push("<%= feedback[j].toneId[k]%>");
+                score.push((parseInt(parseFloat(<%= feedback[j].score[k]%>)*100)));
+              <%}%>
+              
             }
+            
+          <%}%>
+            }
+            
           }
+          console.log("feedback chart");
+          console.log(label);
+          console.log(score)
+          feedbackChart.data.labels = label;
+          feedbackChart.data.datasets[0].data = score;
+          feedbackChart.update();
           $('#personalDetails').empty();
           $('#personalDetails').append(content);
           $('#personalDetails').addClass("text-center");
+          
            });
         };
   </script>
@@ -569,7 +619,7 @@
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
-                    suggestedMax: 200
+                    suggestedMax: 100
                 }
             }]
         }
@@ -577,14 +627,15 @@
 });
 
   //stress chart
+
   var ctx = document.getElementById('stressChart').getContext('2d');
-var stressChart = new Chart(ctx, {
+  var stressChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Stress', 'Relaxed', 'Anxiety', 'Xyz'],
+        labels: ['Lazy','Tired','Determined','Anxiety'],
         datasets: [{
             label: '# of Votes',
-            data: [3, 5, 2, 3],
+            data: [],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -598,6 +649,36 @@ var stressChart = new Chart(ctx, {
                 'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    suggestedMax: 10
+                }
+            }]
+        }
+    }
+});
+
+//feedback chart
+  
+var ctx = document.getElementById('feedbackChart').getContext('2d');
+  var feedbackChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Sad','Fear','Anger','Confident'],
+        datasets: [{
+            label: 'Feedback',
+            data: [83,92,91,98],
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(255, 159, 64, 1)'
+            ]
         }]
     },
     options: {
@@ -619,7 +700,15 @@ var stressChart = new Chart(ctx, {
         //receive feedback
       socket.on('receive_feedback', (data) => {
       console.log(data);
-      console.log(data.feedbackSent.question_3)
+      console.log(data.feedbackSent.question_3);
+      var feedbackdata =[];
+      feedbackdata.push(parseInt(data.feedbackSent.rating_1)+parseInt(data.feedbackSent.rating_2)-parseInt(data.feedbackSent.rating_3));
+      feedbackdata.push(parseInt(data.feedbackSent.rating_5)+parseInt(data.feedbackSent.rating_6));
+      feedbackdata.push(15-(parseInt(data.feedbackSent.rating_7)+parseInt(data.feedbackSent.rating_8)+parseInt(data.feedbackSent.rating_9)));
+      feedbackdata.push(10-parseInt(data.feedbackSent.rating_4));
+      stressChart.data.datasets[0].data = feedbackdata;
+      stressChart.update();
+
       });
       });
 
