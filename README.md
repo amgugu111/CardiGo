@@ -18,3 +18,4 @@ https://cardigo.eu-gb.cf.appdomain.cloud/
 
 ID: admin@deloitte.com
 password: admin
+access token: 7ZACQax4wX5PDnZVQzPC
