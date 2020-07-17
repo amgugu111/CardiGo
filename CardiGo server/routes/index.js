@@ -29,7 +29,6 @@ router.get('/dashboard', function(req, res) {
       else{
         for(let i = 0; i< data.total_rows;i++){
           hof = JSON.parse(data.rows[i].doc.result);
-          console.log(hof);
           hofdata.push ({
             employeeID: hof.Em_Id,
             class: hof.images[0].classifiers[0].classes[0].class,

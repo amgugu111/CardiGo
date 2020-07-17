@@ -284,7 +284,7 @@
                             <canvas id="feedbackChart" width="300" height="300"></canvas>
                           </div>
                           <div class="col-md-6">
-                            <%= hofdata[0].class %>
+                            <canvas id="hofChart" width="300" height="300"></canvas>
                         </div>
                       </div>
                     <div class="modal-footer">
@@ -533,6 +533,8 @@
           var label = [];
           var score = [];
           var flag = 0;
+          var hoflabel = [];
+          var hofscore = [];
           $.getJSON("json/employee.json", function(result){
             for (let i = 0; i < result.length ; i++) { 
             if(id == result[i].id){
@@ -555,15 +557,32 @@
             }
             
           <%}%>
+
+          <% for(var m = 0; m < hofdata.length; m++) { %>
+            if(result[i].employee_id == "<%= hofdata[m].employeeID %>" ){
+              console.log("<%= hofdata[m].class%>")
+              console.log(<%= hofdata[m].score%>)
+              hoflabel.push("<%= hofdata[m].class%>")
+              hofscore.push((parseInt(parseFloat(<%= hofdata[m].score%>)*100)))
+            }
+          <% } %>
+
             }
             
           }
           console.log("feedback chart");
           console.log(label);
-          console.log(score)
+          console.log(score);
+          console.log(hoflabel);
+          console.log(hofscore);
+          //feedback chart update
           feedbackChart.data.labels = label;
           feedbackChart.data.datasets[0].data = score;
           feedbackChart.update();
+          //hofchart update
+          hofChart.data.labels = hoflabel;
+          hofChart.data.datasets[0].data = hofscore;
+          hofChart.update();
           $('#personalDetails').empty();
           $('#personalDetails').append(content);
           $('#personalDetails').addClass("text-center");
@@ -673,6 +692,36 @@ var ctx = document.getElementById('feedbackChart').getContext('2d');
         }
     }
 });
+
+//hand over face chart
+var ctx = document.getElementById('hofChart').getContext('2d');
+    var hofChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [],
+        datasets: [{
+            label: '',
+            data: [],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    suggestedMax: 100
+                }
+            }]
+        }
+    }
+});
   </script>
   <script>
      const socket = io('https://cardigo.eu-gb.cf.appdomain.cloud');
@@ -713,14 +762,6 @@ var ctx = document.getElementById('feedbackChart').getContext('2d');
       });
 
       
-  </script>
-
-  <script>
-    $.ajax({
-      url: "https://node-red-vlxgg.eu-gb.mybluemix.net/trp"
-    }).done(function(data) {
-      console.log(data);
-    });
   </script>
 </body>
 
