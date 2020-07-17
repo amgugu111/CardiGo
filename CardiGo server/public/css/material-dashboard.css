@@ -17534,7 +17534,7 @@ html[dir="rtl"] .form-check .form-check-sign .check:before {
 .card.bg-success,
 .card.card-rotate.bg-success .front,
 .card.card-rotate.bg-success .back {
-  background: linear-gradient(to right, #000000, #434343);
+  background: linear-gradient(60deg, #66bb6a, #43a047);
 }
 
 .card .card-header-warning .card-icon,
@@ -17543,7 +17543,7 @@ html[dir="rtl"] .form-check .form-check-sign .check:before {
 .card.bg-warning,
 .card.card-rotate.bg-warning .front,
 .card.card-rotate.bg-warning .back {
-  background: linear-gradient(to right, #000000, #434343);
+  background: linear-gradient(60deg, #ffa726, #fb8c00);
 }
 
 .card .card-header-danger .card-icon,
@@ -17552,7 +17552,7 @@ html[dir="rtl"] .form-check .form-check-sign .check:before {
 .card.bg-danger,
 .card.card-rotate.bg-danger .front,
 .card.card-rotate.bg-danger .back {
-  background: linear-gradient(to right, #000000, #434343);
+  background: linear-gradient(60deg, #ef5350, #e53935);
 }
 
 .card .card-header-rose .card-icon,
