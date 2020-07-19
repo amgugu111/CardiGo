@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
+# In[7]:
 
 
 import cv2
 import time
 import os
+import json
 
 
-# In[8]:
+# In[5]:
 
 
 import requests
@@ -26,11 +27,10 @@ try:
     print('dir created')
 except OSError as error:
     print('dir already exists')
-
-videoCaptureObject = cv2.VideoCapture(0)
 result = True
 i=1
 while(result):
+    videoCaptureObject = cv2.VideoCapture(0)
     ret,frame = videoCaptureObject.read()
     cv2.imwrite(r"C:\Users\Anwesha\Desktop\New pics\live\Picture"+".jpg",frame)
     image_file_descriptor = open(r"C:\Users\Anwesha\Desktop\New pics\live\Picture.jpg", 'rb')
@@ -44,12 +44,21 @@ while(result):
     
     if i==6:
         result = False
-videoCaptureObject.release()
-cv2.destroyAllWindows()
+    videoCaptureObject.release()
+    cv2.destroyAllWindows()
 
 
-# In[20]:
+# In[3]:
 
 
 
+
+
+# In[16]:
+
+
+data_1={'Id':'DEL127893'}
+url_1="https://node-red-vlxgg.eu-gb.mybluemix.net/Id"
+rs=requests.post(url_1,json=data_1)
+print(rs.status_code)
 
