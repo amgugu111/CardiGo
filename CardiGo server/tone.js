@@ -42,7 +42,6 @@ const toneAnalyzer = new ToneAnalyzerV3({
           for(i = 0; i<toneFeedback.length;i++){
             str+=toneFeedback[i].score+"-"+toneFeedback[i].tone_id+"-";
           }
-          console.log(str);
           request({
             url: 'http://localhost:3000/dashboard/'+str,
             method: 'GET'

@@ -673,10 +673,7 @@ var ctx = document.getElementById('hofChart').getContext('2d');
       for (let i= 0; i < data.tracepulse.length; i++) {
         label.push(i.toString());
       }
-      console.log(label);
       pulsedata = data.tracepulse;
-      console.log(pulsedata);
-      console.log("inside add chart function");
       myChart.data.labels = label;
       myChart.data.datasets[0].data = pulsedata;
       myChart.update();
