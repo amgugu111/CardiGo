@@ -29,11 +29,14 @@ router.get('/dashboard', function(req, res) {
       else{
         for(let i = 0; i< data.total_rows;i++){
           hof = JSON.parse(data.rows[i].doc.result);
-          hofdata.push ({
+          if(hof.images[0].classifiers[0].classes[0].class != null && hof.images[0].classifiers[0].classes[0].score != null){
+            hofdata.push ({
             employeeID: hof.Em_Id,
             class: hof.images[0].classifiers[0].classes[0].class,
             score: hof.images[0].classifiers[0].classes[0].score
-          });
+             });
+            }
+          
         }
         // console.log(hofdata);
 
