@@ -38,7 +38,6 @@ router.get('/dashboard', function(req, res) {
             }
           
         }
-        // console.log(hofdata);
 
     feedbackSchema.find({},(err, data) => {
       if (err) console.log(err);
@@ -62,17 +61,6 @@ router.post('/login', function(req, res) {
   }
     
 });
-
-/* GET dashboard page. */
-// router.get('/admin', function(req, res) {
-//   res.render('dashboard', { title: 'Admin dashboard' });
-// });
-
-/* GET  page. */
-// router.get('/dashboard/:str', function(req, res) {
-//   res.send(req.params.str);
-  
-// });
 
 
 module.exports = router;
